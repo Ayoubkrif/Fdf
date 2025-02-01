@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_windows.c                                     :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 12:43:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/01/30 13:18:26 by aykrifa          ###   ########.fr       */
+/*   Created: 2024/11/02 14:43:32 by ayoub             #+#    #+#             */
+/*   Updated: 2024/11/14 07:39:10 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
-#include "minilibx-linux/mlx.h"
-#include "minilibx-linux/mlx_int.h"
-#include "mlx.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+t_list	*ft_lstlast(t_list *lst)
 {
-	void	*mlx;
-
-	mlx = mlx_init();
-	mlx_new_window(mlx, 1920, 1080, "Fdf");
-	mlx_loop(mlx);
-	mlx_loop_end(mlx);
+	if (!lst)
+		return (lst);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
