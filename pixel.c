@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/01 21:42:11 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/02 11:54:40 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color)
     }
 }
 
-t_projection	init_point(int	x, int	y)
+t_projection	init_projection(int	x, int	y)
 {
 	t_projection	point;
 
@@ -79,16 +79,16 @@ t_projection	init_point(int	x, int	y)
 	return (point);
 }
 
-void	line(t_data img, t_point current, t_point next, int coulour)
+void	line(t_data img, t_projection current, t_projection next, int coulour)
 {
 		ft_draw_line_b(&img, current.x, current.y, next.x, next.y, coulour); //jaune
 }
 
-void	recurse(t_data img, t_point current, t_point end)
+void	recurse(t_data img, t_projection current, t_projection end)
 {
 	int dist = 30;
-	t_point	nextx = init_point(current.x + dist, current.y);
-	t_point	nexty = init_point(current.x , current.y + dist);
+	t_projection	nextx = init_projection(current.x + dist, current.y);
+	t_projection	nexty = init_projection(current.x , current.y + dist);
 
 	if (nextx.x <= end.x)
 	{
@@ -102,9 +102,9 @@ void	recurse(t_data img, t_point current, t_point end)
 	}
 }
 
-void	quadrillage(t_data img, t_point start, int n_x, int n_y)
+void	quadrillage(t_data img, t_projection start, int n_x, int n_y)
 {
-	t_point	end = init_point(n_x * 20, n_y * 20);
+	t_projection	end = init_projection(n_x * 20, n_y * 20);
 
 	recurse(img, start, end);
 }
@@ -137,7 +137,7 @@ int	key_hook(int keycode, t_data *img)
 		y--;
 	if (keycode == 32) // Touche ESPACE pour lancer quadrillage
 	{
-		t_projection start = init_point(startx, starty);
+		t_projection start = init_projection(startx, starty);
 		quadrillage(*img, start, x, y);
 		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 	}

@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:43:37 by ayoub             #+#    #+#             */
-/*   Updated: 2024/11/14 07:38:50 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/02 13:44:45 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ t_list	*ft_lstnew(void *content)
 	if (!newlst)
 		return (NULL);
 	newlst->next = NULL;
-	newlst->content = content;
+	newlst->s = content;
 	return (newlst);
 }

@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:43:30 by ayoub             #+#    #+#             */
-/*   Updated: 2024/11/14 07:39:18 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/02 13:45:08 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 		return ;
 	while (lst)
 	{
-		f(lst->content);
+		f(lst->s);
 		lst = lst->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:21:01 by aykrifa           #+#    #+#             */
-/*   Updated: 2024/11/15 12:01:16 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/02 13:44:59 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*head;
 	void	*fcontent;
 
-	fcontent = f(lst->content);
+	fcontent = f(lst->s);
 	head = ft_lstnew(fcontent);
 	if (!head)
 		return (ft_mallocerror(&fcontent, del));
 	lst = lst->next;
 	while (lst)
 	{
-		fcontent = f(lst->content);
+		fcontent = f(lst->s);
 		new = ft_lstnew(fcontent);
 		if (new == NULL)
 		{

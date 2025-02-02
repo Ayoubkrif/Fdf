@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:43:27 by ayoub             #+#    #+#             */
-/*   Updated: 2024/11/14 12:05:19 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/02 13:45:17 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	del(lst->content);
+	del(lst->s);
 	free(lst);
 }
