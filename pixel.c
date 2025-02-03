@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/02 11:54:40 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/03 12:44:36 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (x >= 0 && x < 1920 && y >= 0 && y < 1080)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
 // Algorithme de Bresenham
@@ -46,11 +49,12 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color)
 }
 
 //algo qui fonctionne
+/*
 void ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color)
 {
     int step;
-    double x, y;
-    double delta_x, delta_y;
+    int x, y;
+    int delta_x, delta_y;
 
     delta_x = x2 - x1;
     delta_y = y2 - y1;
@@ -68,7 +72,7 @@ void ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color)
         x += delta_x;
         y += delta_y;
     }
-}
+}*/
 
 t_projection	init_projection(int	x, int	y)
 {
@@ -81,64 +85,52 @@ t_projection	init_projection(int	x, int	y)
 
 void	line(t_data img, t_projection current, t_projection next, int coulour)
 {
-		ft_draw_line_b(&img, current.x, current.y, next.x, next.y, coulour); //jaune
+	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, coulour); //jaune
 }
 
-void	recurse(t_data img, t_projection current, t_projection end)
-{
-	int dist = 30;
-	t_projection	nextx = init_projection(current.x + dist, current.y);
-	t_projection	nexty = init_projection(current.x , current.y + dist);
 
-	if (nextx.x <= end.x)
+t_projection project_iso(int **z, int x, int y)
+{
+    t_projection	result;
+
+    result.x = OFFSET + (STEP * (cos(ANGLE) * x - cos(ANGLE) * y));
+    result.y = OFFSET + (STEP * (sin(ANGLE) * x + sin(ANGLE) * y - z[y][x]));
+    return (result);
+}
+
+void	recurse(t_data img, t_projection current, int x, int y)
+{
+	t_projection	nextx;
+	t_projection	nexty;
+
+	if (x + 1 < img.x_max)
 	{
+		nextx = project_iso(img.coordinate, x + 1, y);
 		line(img, current, nextx, 0x00FF0000); //jaune
-		recurse(img, nextx, end);
+		recurse(img, nextx, x + 1, y);
 	}
-	if (nexty.y <= end.y)
+	if (y + 1 < img.y_max)
 	{
+		nexty = project_iso(img.coordinate , x, y + 1);
 		line(img, current, nexty, 0x0000FF00); //jaune
-		recurse(img, nexty, end);
+		recurse(img, nexty, x, y + 1);
 	}
 }
 
-void	quadrillage(t_data img, t_projection start, int n_x, int n_y)
+void	quadrillage(t_data img)
 {
-	t_projection	end = init_projection(n_x * 20, n_y * 20);
-
-	recurse(img, start, end);
+	recurse(img, img.start, 0, 0);
 }
 
 int	key_hook(int keycode, t_data *img)
 {
-	static int x = 3;
-	static int y = 3;
-	static int startx = 10;
-	static int starty = 10;
-
-
 	if (keycode == 65307) // Touche ESC pour quitter
 		exit(0);
-	if (keycode == 65363) // droite
-		startx++;
-	if (keycode == 65361) // gauche
-		startx--;
-	if (keycode == 65364) // bas
-		starty++;
-	if (keycode == 65362) // haut
-		starty--;
-	if (keycode == 97) // a
-		x++;
-	if (keycode == 122) // z
-		x--;
-	if (keycode == 113) // q
-		y++;
-	if (keycode == 119) // w
-		y--;
 	if (keycode == 32) // Touche ESPACE pour lancer quadrillage
 	{
-		t_projection start = init_projection(startx, starty);
-		quadrillage(*img, start, x, y);
+		img->start = project_iso(img->coordinate, 0, 0);
+		line(*img ,init_projection(0, 0), img->start,0x00FF0000);
+		quadrillage(*img);
 		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 	}
 	return (0);

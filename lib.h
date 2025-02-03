@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/02 11:54:52 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:04:47 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,25 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+typedef struct s_projection
+{
+	int	x;
+	int	y;
+}	t_projection;
+
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		**coordinate;
-	int		y_max;
-	int		x_max;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void				*mlx;
+	void				*win;
+	void				*img;
+	char				*addr;
+	int					**coordinate;
+	int					y_max;
+	int					x_max;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+	struct s_projection	start;
 }	t_data;
 
 typedef struct s_point
@@ -40,14 +47,12 @@ typedef struct s_point
 	int	z;
 }	t_point;
 
-typedef struct s_projection
-{
-	int	x;
-	int	y;
-}	t_projection;
-
 # define TRUE 1
 # define OPEN_FAILURE -1
+
+# define ANGLE 0.523598776
+# define STEP -20
+# define OFFSET 300
 
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(int **tab, int line);
@@ -58,10 +63,13 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color);
 //algo qui fonctionne
 void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
+//void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
 t_projection	init_projection(int x, int y);
 void			line(t_data img, t_projection current, t_projection next, int coulour);
-void			recurse(t_data img, t_projection current, t_projection end);
-void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
+//void			recurse(t_data img, t_projection current, t_projection end);
+void			recurse(t_data img, t_projection current, int x, int y);
+//void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
+void			quadrillage(t_data img);
 int				key_hook(int keycode, t_data *img);
 
 #endif
