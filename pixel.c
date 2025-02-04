@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/03 12:44:36 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:32:01 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,30 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-// Algorithme de Bresenham
-void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color)
+int interpolate_color(int color1, int color2, float t)
+{
+    int r1 = (color1 >> 16) & 0xFF; // Rouge du point 1
+    int g1 = (color1 >> 8)  & 0xFF; // Vert du point 1
+    int b1 =  color1        & 0xFF; // Bleu du point 1
+
+    int r2 = (color2 >> 16) & 0xFF; // Rouge du point 2
+    int g2 = (color2 >> 8)  & 0xFF; // Vert du point 2
+    int b2 =  color2        & 0xFF; // Bleu du point 2
+
+    // 🔹 Interpolation linéaire pour chaque canal
+    int r = (int)(r1 + t * (r2 - r1));
+    int g = (int)(g1 + t * (g2 - g1));
+    int b = (int)(b1 + t * (b2 - b1));
+
+    // 🔹 Reconstruction de la couleur (format 0xRRGGBB)
+    return ((r << 16) | (g << 8) | b);
+}// Algorithme de Bresenham
+
+void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2)
 {
     int dx, dy, sx, sy, err, e2;
+    int	length = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2- y1));
+    int	step = 0;
 
     dx = abs(x2 - x1);
     dy = abs(y2 - y1);
@@ -39,14 +59,20 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color)
 
     while (1)
     {
+	float t = (length == 0) ? 0 : (float)step / length;
+	int color = interpolate_color(color1, color2, t);
         my_mlx_pixel_put(data, x1, y1, color);
         if (x1 == x2 && y1 == y2)
             break;
         e2 = 2 * err;
         if (e2 > -dy) { err -= dy; x1 += sx; }
         if (e2 < dx) { err += dx; y1 += sy; }
+	step++;
     }
+    my_mlx_pixel_put(data, x1, y1, color1);
+    my_mlx_pixel_put(data, x2, y2, color2);
 }
+
 
 //algo qui fonctionne
 /*
@@ -83,18 +109,19 @@ t_projection	init_projection(int	x, int	y)
 	return (point);
 }
 
-void	line(t_data img, t_projection current, t_projection next, int coulour)
+void	line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn)
 {
-	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, coulour); //jaune
+	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, img.coordinate[yc][xc].colour, img.coordinate[yn][xn].colour); //jaune
 }
 
 
-t_projection project_iso(int **z, int x, int y)
+t_projection project_iso(t_coordinate **point, int x, int y)
 {
     t_projection	result;
 
     result.x = OFFSET + (STEP * (cos(ANGLE) * x - cos(ANGLE) * y));
-    result.y = OFFSET + (STEP * (sin(ANGLE) * x + sin(ANGLE) * y - z[y][x]));
+    result.y = OFFSET + (STEP * (sin(ANGLE) * x + sin(ANGLE) * y - point[y][x].z));
+	result.colour = point[y][x].colour;
     return (result);
 }
 
@@ -106,13 +133,13 @@ void	recurse(t_data img, t_projection current, int x, int y)
 	if (x + 1 < img.x_max)
 	{
 		nextx = project_iso(img.coordinate, x + 1, y);
-		line(img, current, nextx, 0x00FF0000); //jaune
+		line(img, current, nextx, x, y, x + 1, y); //jaune
 		recurse(img, nextx, x + 1, y);
 	}
 	if (y + 1 < img.y_max)
 	{
 		nexty = project_iso(img.coordinate , x, y + 1);
-		line(img, current, nexty, 0x0000FF00); //jaune
+		line(img, current, nexty, x, y, x, y + 1); //jaune
 		recurse(img, nexty, x, y + 1);
 	}
 }
@@ -129,7 +156,7 @@ int	key_hook(int keycode, t_data *img)
 	if (keycode == 32) // Touche ESPACE pour lancer quadrillage
 	{
 		img->start = project_iso(img->coordinate, 0, 0);
-		line(*img ,init_projection(0, 0), img->start,0x00FF0000);
+		ft_draw_line_b(img, 0, 0, img->start.x, img->start.y, 0xFFFFFF, img->coordinate[0][0].colour); //jaune
 		quadrillage(*img);
 		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 	}

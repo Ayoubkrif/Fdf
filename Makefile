@@ -6,18 +6,18 @@ OBJ = $(SRC:.c=.o)
 
 NAME = fdf
 
-CC = gcc
+CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -L. -lmlx \
-		 -Lminilibx-linux -lXext -lX11 -lm -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 AR = ar rc
 
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft
-	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LBS)
+	make bonus -C libft
+	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LBS)  -lmlx \
+		 -Lminilibx-linux -lXext -lX11 -lm 
 
 $(OBJ) : $(SRC)
 	$(CC) $(CFLAGS) -c $(SRC)
@@ -26,9 +26,11 @@ libft/libft.a :
 	make -C libft
 
 clean :
+	make clean -C libft
 	rm -rf *.o
 
 fclean : clean
+	make fclean -C libft
 	rm -rf *.a
 
 re : fclean all
