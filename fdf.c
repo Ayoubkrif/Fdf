@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/05 15:37:49 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 20:51:56 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	map = init_map_lst(map, fd);
 	fill_coordinate(map, fdf);
 	print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
-	fdf->angle.x = PI / 6;
+	fdf->angle.x = 0.5235987756;
 	fdf->angle.y = 0.7853981634;
-	fdf->angle.z = 0.5235987756;
+	fdf->angle.z = 0;
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, "Square");
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);

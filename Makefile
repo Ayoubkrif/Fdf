@@ -6,7 +6,7 @@ OBJ = $(SRC:.c=.o)
 
 NAME = fdf
 
-CC = cc
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
@@ -16,8 +16,7 @@ all : $(NAME)
 
 $(NAME): $(OBJ)
 	make bonus -C libft
-	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LBS)  -lmlx \
-		 -Lminilibx-linux -lXext -lX11 -lm 
+	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LBS)  -lmlx -Lminilibx-linux -lXext -lX11 -lm 
 
 $(OBJ) : $(SRC)
 	$(CC) $(CFLAGS) -c $(SRC)

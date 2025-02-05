@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/05 09:00:17 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 20:57:03 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	print_int_tab(t_coordinate **tab, int y, int x)
 		j = 0;
 		while (j < x)
 		{
-			printf("%4d ", tab[i][j].z);
+			printf("%4f ", tab[i][j].z);
 			printf(",%8X", tab[i][j].colour);
 			j++;
 		}

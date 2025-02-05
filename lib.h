@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/05 15:11:06 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 20:56:16 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 
 typedef struct s_projection
 {
-	int	x;
-	int	y;
+	float	x;
+	float	y;
 	int	colour;
 }	t_projection;
 
 typedef struct s_coordinate
 {
-	int	z;
+	float	z;
 	int	colour;
 	int	colourh;
 }	t_coordinate;
@@ -42,8 +42,8 @@ typedef struct s_angle
 
 typedef struct s_offset
 {
-	int	x;
-	int	y;
+	float	x;
+	float	y;
 }	t_offset;
 
 typedef struct s_data
@@ -56,10 +56,10 @@ typedef struct s_data
 	struct s_coordinate	**coordinate;
 	struct s_angle		angle;
 
-	int					y_max;
-	int					x_max;
-	int					z_max;
-	int					z_min;
+	float					y_max;
+	float					x_max;
+	float					z_max;
+	float					z_min;
 	struct s_offset		offset;
 
 	int					bits_per_pixel;
