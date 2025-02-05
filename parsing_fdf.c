@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/04 15:27:12 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 09:00:17 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 			{
 				k += 3;
 				fdf->coordinate[i][j].colour = ft_atoi_base(&(lst->s[k]), "0123456789ABCDEF");
-				while (is_base(lst->s[k], "0123456789ABCDEF"))
+				fdf->coordinate[i][j].colourh = ft_atoi_base(&(lst->s[k]), "0123456789abcdef");
+				if (fdf->coordinate[i][j].colourh > fdf->coordinate[i][j].colour)
+						fdf->coordinate[i][j].colour = fdf->coordinate[i][j].colourh;
+				while (is_base(lst->s[k], "0123456789ABCDEFabcdef"))
 					k++;
 			}
 			else

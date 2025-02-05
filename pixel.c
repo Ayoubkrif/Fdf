@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/04 15:32:01 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 08:46:24 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,13 @@ t_projection project_iso(t_coordinate **point, int x, int y)
 {
     t_projection	result;
 
-    result.x = OFFSET + (STEP * (cos(ANGLE) * x - cos(ANGLE) * y));
+    result.x = 1000 + OFFSET + (STEP * (cos(ANGLE) * x - cos(ANGLE) * y));
     result.y = OFFSET + (STEP * (sin(ANGLE) * x + sin(ANGLE) * y - point[y][x].z));
 	result.colour = point[y][x].colour;
     return (result);
 }
 
-void	recurse(t_data img, t_projection current, int x, int y)
+/*void	recurse(t_data img, t_projection current, int x, int y)
 {
 	t_projection	nextx;
 	t_projection	nexty;
@@ -142,11 +142,41 @@ void	recurse(t_data img, t_projection current, int x, int y)
 		line(img, current, nexty, x, y, x, y + 1); //jaune
 		recurse(img, nexty, x, y + 1);
 	}
+}*/
+
+void	recurse(t_data img)
+{
+	t_projection	next;
+	t_projection	current;
+	int				x;
+	int				y;
+
+	x = 0;
+	while (x < img.x_max)
+	{
+		y = 0;
+		while (y < img.y_max)
+		{
+			current = project_iso(img.coordinate, x, y);
+			if (x + 1 < img.x_max)
+			{
+				next = project_iso(img.coordinate, x + 1, y);
+				line(img, current, next, x, y, x + 1, y); //jaune
+			}
+			if (y + 1 < img.y_max)
+			{
+				next = project_iso(img.coordinate , x, y + 1);
+				line(img, current, next, x, y, x, y + 1); //jaune
+			}
+			y++;
+		}
+		x++;
+	}
 }
 
 void	quadrillage(t_data img)
 {
-	recurse(img, img.start, 0, 0);
+	recurse(img);
 }
 
 int	key_hook(int keycode, t_data *img)
@@ -155,8 +185,7 @@ int	key_hook(int keycode, t_data *img)
 		exit(0);
 	if (keycode == 32) // Touche ESPACE pour lancer quadrillage
 	{
-		img->start = project_iso(img->coordinate, 0, 0);
-		ft_draw_line_b(img, 0, 0, img->start.x, img->start.y, 0xFFFFFF, img->coordinate[0][0].colour); //jaune
+		ft_draw_line_b(img, 0, 0, project_iso(img->coordinate, 0, 0).x, project_iso(img->coordinate, 0, 0).y, 0xFFFFFF, img->coordinate[0][0].colour); //jaune
 		quadrillage(*img);
 		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 	}

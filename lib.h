@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/04 15:15:00 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 09:00:28 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_coordinate
 {
 	int	z;
 	int	colour;
+	int	colourh;
 }	t_coordinate;
 
 typedef struct s_data
@@ -58,8 +59,8 @@ typedef struct s_point
 # define OPEN_FAILURE -1
 
 # define ANGLE 0.523598776
-# define STEP -20
-# define OFFSET 300
+# define STEP 1
+# define OFFSET 0
 
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(t_coordinate **tab, int line);
@@ -76,7 +77,7 @@ t_projection	init_projection(int x, int y);
 //void			line(t_data img, t_projection current, t_projection next, int coulour);
 void			line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn);
 //void			recurse(t_data img, t_projection current, t_projection end);
-void			recurse(t_data img, t_projection current, int x, int y);
+void			recurse(t_data img);
 //void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
 void			quadrillage(t_data img);
 int				key_hook(int keycode, t_data *img);
