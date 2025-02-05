@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/04 12:36:57 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:37:49 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	map = init_map_lst(map, fd);
 	fill_coordinate(map, fdf);
 	print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
+	fdf->angle.x = PI / 6;
+	fdf->angle.y = 0.7853981634;
+	fdf->angle.z = 0.5235987756;
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, "Square");
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
@@ -58,7 +61,8 @@ int	main(int argc, char **argv)
 	if (fd == OPEN_FAILURE)
 		return (1);
 	init_fdf(fd, map, &fdf);
-	mlx_key_hook(fdf.win, (int (*)(int , void *))key_hook, &fdf);
+	//mlx_key_hook(fdf.win, (int (*)(int , void *))key_hook, &fdf);
+	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf); // 2 = KeyPress
 	mlx_loop(fdf.mlx);
 	liberator_int_tab(fdf.coordinate, fdf.y_max);
 	ft_lstclear(&map, free);
