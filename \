@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/06 16:59:53 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:50:20 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	interpolate_color(int color1, int color2, float t)
 
 void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2)
 {
-	float dx, dy, sx, sy, err, e2;
-	float	length = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2- y1));
-	int	step = 0;
+    int dx, dy, sx, sy, err, e2;
+    int	length = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2- y1));
+    int	step = 0;
 
-	dx = abs(x2 - x1);
-	dy = abs(y2 - y1);
-	sx = (x1 < x2) ? 1 : -1;
-	sy = (y1 < y2) ? 1 : -1;
+    dx = abs(x2 - x1);
+    dy = abs(y2 - y1);
+    sx = (x1 < x2) ? 1 : -1;
+    sy = (y1 < y2) ? 1 : -1;
     err = dx - dy;
 
     while (1)
@@ -93,43 +93,6 @@ t_projection project_iso_bonus(t_data fdf, int x, int y)
     double x_rot, y_rot, z_rot;
     double x_temp, y_temp, z_temp;
     
-    // Coordonnées initiales
-    double x0 = x;
-    double y0 = y;
-    double z0 = fdf.coordinate[y][x].z;
-
-    // Rotation autour de l'axe X (pitch = π/2)
-    y_temp = cos(fdf.angle.x) * y0 - sin(fdf.angle.x) * z0;
-    z_temp = sin(fdf.angle.x) * y0 + cos(fdf.angle.x) * z0;
-    y_rot = y_temp;
-    z_rot = z_temp;
-
-    // Rotation autour de l'axe Y (yaw = 0)
-    x_temp = cos(fdf.angle.y) * x0 + sin(fdf.angle.y) * z_rot;
-    z_temp = -sin(fdf.angle.y) * x0 + cos(fdf.angle.y) * z_rot;
-    x_rot = x_temp;
-    z_rot = z_temp;
-
-    // Rotation autour de l'axe Z (roll = 0)
-    x_temp = cos(fdf.angle.z) * x_rot - sin(fdf.angle.z) * y_rot;
-    y_temp = sin(fdf.angle.z) * x_rot + cos(fdf.angle.z) * y_rot;
-    x_rot = x_temp;
-    y_rot = y_temp;
-
-    // Dans une vue de dessus, on peut décider de simplement utiliser les coordonnées tournées
-    result.x = fdf.offset.x + (STEP * x_rot);
-    result.y = fdf.offset.y + (STEP * y_rot);
-    result.colour = fdf.coordinate[y][x].colour;
-
-    return result;
-}
-
-/*t_projection project_iso_bonus(t_data fdf, int x, int y)
-{
-    t_projection result;
-    double x_rot, y_rot, z_rot;
-    double x_temp, y_temp, z_temp;
-    
     // Récupération des coordonnées initiales
     double x0 = x;
     double y0 = y;
@@ -155,17 +118,17 @@ t_projection project_iso_bonus(t_data fdf, int x, int y)
 
     // Projection isométrique
     result.x = fdf.offset.x + (STEP * (x_rot - y_rot));
-    result.y = fdf.offset.y + (STEP * ((((x_rot + y_rot) / 2) - z_rot)));
+    result.y = fdf.offset.y + (STEP * (x_rot + y_rot) / 2 - z_rot);
     result.colour = fdf.coordinate[y][x].colour;
 
     return (result);
-}*/
+}
 
 float	distance(int a, int b)
 {
 	return ((a + b) / 2);
 }
-/*
+
 t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
 {
     t_projection result;
@@ -179,8 +142,8 @@ t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
     z_rot = z_temp;
 
     // Rotation autour de Y (Yaw)
-    x_temp = cos(img.angle.y) * x + sin(img.angle.y) * z_rot;
-    z_temp = -sin(img.angle.y) * x + cos(img.angle.y) * z_rot;
+    x_temp = cos(img.angle.y) * x + sin(img.angle.x) * z_rot;
+    z_temp = -sin(img.angle.y) * x + cos(img.angle.x) * z_rot;
     x_rot = x_temp;
     z_rot = z_temp;
 
@@ -191,39 +154,8 @@ t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
     y_rot = y_temp;
 
     // Projection 2D
-    result.x = (x_rot - y_rot) * STEP;
-    result.y = (STEP * ((((x_rot + y_rot) / 2) - z_rot)));
-
-    return result;
-}
-*/
-t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
-{
-    t_projection result;
-    double x_rot, y_rot, z_rot;
-    double x_temp, y_temp, z_temp;
-
-    // Rotation autour de X (Pitch)
-    y_temp = cos(img.angle.x) * y - sin(img.angle.x) * z;
-    z_temp = sin(img.angle.x) * y + cos(img.angle.x) * z;
-    y_rot = y_temp;
-    z_rot = z_temp;
-
-    // Rotation autour de Y (Yaw)
-    x_temp = cos(img.angle.y) * x + sin(img.angle.y) * z_rot;
-    z_temp = -sin(img.angle.y) * x + cos(img.angle.y) * z_rot;
-    x_rot = x_temp;
-    z_rot = z_temp;
-
-    // Rotation autour de Z (Roll)
-    x_temp = cos(img.angle.z) * x_rot - sin(img.angle.z) * y_rot;
-    y_temp = sin(img.angle.z) * x_rot + cos(img.angle.z) * y_rot;
-    x_rot = x_temp;
-    y_rot = y_temp;
-
-    // Projection 2D
-    result.x = img.offset.x + (STEP * x_rot);
-    result.y = img.offset.y + (STEP * y_rot);
+    result.x = x_rot * STEP;
+    result.y = y_rot * STEP;
 
     return result;
 }
@@ -232,10 +164,10 @@ t_offset	set_offset(t_data img)
 	t_offset		offset;
 	t_projection	middle;
 	
-	middle = project_3d_to_2d(img.x_max / 2, img.y_max / 2, 0, img);
+	middle = project_3d_to_2d(img.x_max / 2, img.y_max / 2, distance(img.z_max, img.z_min), img);
 	offset.x = 960 - middle.x;
 	offset.y = 540 - middle.y;
-	ft_draw_line_b(&img, 0, 0, middle.x + offset.x, middle.y + offset.y, 0x0, 0xFFFFFF);
+	printf("%f %f \n" ,middle.x, middle.y);
 	return (offset);
 }
 
@@ -310,13 +242,6 @@ int	key_hook(int keycode, t_data *img)
 	if (keycode == KEY_D)
 	{
 		img->angle.z -= PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_UP)
-	{
-		img->angle.x = 0;
-		img->angle.y = 0;
-		img->angle.z = 0;
 		put_new_img(img);
 	}
 	if (keycode == KEY_ESC) // Touche ESC pour quitter

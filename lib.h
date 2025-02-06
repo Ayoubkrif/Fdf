@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/05 20:56:16 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/06 16:46:20 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_data
 # define OPEN_FAILURE -1
 
 # define ANGLE 0.523598776
-# define STEP 50
+# define STEP 1
 # define OFFSET 500
 # define PI 3.14159265358979323846
 # define KEY_ESC         65307

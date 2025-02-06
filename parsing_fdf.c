@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/05 20:57:03 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:43:41 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 			fdf->coordinate[i][j].z = ft_atoi(&(lst->s)[k]);
 			while (ft_isdigit((lst->s)[k]))
 				k++;
+			if ((!i && !j) || (fdf->coordinate[i][j].z > fdf->z_max))
+				fdf->z_max = fdf->coordinate[i][j].z;
+			if ((!i && !j) || (fdf->coordinate[i][j].z < fdf->z_min))
+				fdf->z_max = fdf->coordinate[i][j].z;
 			if (lst->s[k] == ',')
 			{
 				k += 3;
