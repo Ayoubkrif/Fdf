@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/06 16:59:53 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:09:57 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ t_projection project_iso_bonus(t_data fdf, int x, int y)
     y_rot = y_temp;
 
     // Dans une vue de dessus, on peut décider de simplement utiliser les coordonnées tournées
-    result.x = fdf.offset.x + (STEP * x_rot);
-    result.y = fdf.offset.y + (STEP * y_rot);
+    result.x = fdf.translate.x + fdf.offset.x + (fdf.zoom * x_rot);
+    result.y = fdf.translate.y + fdf.offset.y + (fdf.zoom * y_rot);
     result.colour = fdf.coordinate[y][x].colour;
 
     return result;
@@ -196,6 +196,7 @@ t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
 
     return result;
 }
+struct of array > array of struct
 */
 t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
 {
@@ -222,8 +223,8 @@ t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
     y_rot = y_temp;
 
     // Projection 2D
-    result.x = img.offset.x + (STEP * x_rot);
-    result.y = img.offset.y + (STEP * y_rot);
+    result.x = (img.zoom * x_rot);
+    result.y = (img.zoom * y_rot);
 
     return result;
 }
@@ -270,64 +271,8 @@ void	recurse(t_data fdf)
 	}
 }
 
-void	put_new_img(t_data *img)
-{
-	mlx_clear_window(img->mlx, img->win); // Efface l'ancienne image
-	mlx_destroy_image(img->mlx, img->img); // Supprime l'image précédente
-	img->img = mlx_new_image(img->mlx, 1920, 1080); // Crée une nouvelle image
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	recurse(*img); // Redessine la grille
-	mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
-}
 
-int	key_hook(int keycode, t_data *img)
-{
-	if (keycode == KEY_Q)
-	{
-		img->angle.x += PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_A)
-	{
-		img->angle.x -= PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_W)
-	{
-		img->angle.y += PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_S)
-	{
-		img->angle.y -= PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_E)
-	{
-		img->angle.z += PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_D)
-	{
-		img->angle.z -= PI / 12;
-		put_new_img(img);
-	}
-	if (keycode == KEY_UP)
-	{
-		img->angle.x = 0;
-		img->angle.y = 0;
-		img->angle.z = 0;
-		put_new_img(img);
-	}
-	if (keycode == KEY_ESC) // Touche ESC pour quitter
-		exit(0);
-	if (keycode == KEY_SPACE) // Touche ESPACE pour lancer quadrillage
-	{
-		recurse(*img);
-		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
-	}
-	return (0);
-}
+
 
 /*
 t_projection project_spherical(t_data fdf, int x, int y)

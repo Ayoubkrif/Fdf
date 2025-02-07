@@ -1,4 +1,5 @@
 SRC = fdf.c parsing_fdf.c pixel.c \
+	  keyhook.c
 
 LBS = libft/libft.a
 

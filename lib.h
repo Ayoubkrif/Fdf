@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/06 16:46:20 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/07 13:26:30 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ typedef struct s_data
 	float					x_max;
 	float					z_max;
 	float					z_min;
-	struct s_offset		offset;
+	struct s_offset			offset;
+	struct s_offset			translate;
+	int						zoom;
 
 	int					bits_per_pixel;
 	int					line_length;
@@ -101,6 +103,20 @@ typedef struct s_data
 # define KEY_SHIFT       65505
 # define KEY_CTRL        65507
 # define KEY_ALT         65513
+// Clavier principal
+# define KEY_PLUS 61        // '+' sur clavier AZERTY
+# define KEY_MINUS 45       // '-' sur clavier AZERTY
+
+// Molette de la souris
+# define MOUSE_WHEEL_UP 4
+# define MOUSE_WHEEL_DOWN 5
+
+// Événements MLX
+# define EVENT_KEY_PRESS 2
+# define EVENT_KEY_RELEASE 3
+# define EVENT_MOUSE_PRESS 4
+# define EVENT_MOUSE_RELEASE 5
+# define EVENT_DESTROY 17
 
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(t_coordinate **tab, int line);
@@ -120,6 +136,9 @@ void			line(t_data img, t_projection current, t_projection next, int xc, int yc,
 void			recurse(t_data img);
 //void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
 void			quadrillage(t_data img);
+
 int				key_hook(int keycode, t_data *img);
+int				mouse_press(int button, int x, int y, t_data *fdf);
+int				translate_hook(int keycode, t_data *img);
 
 #endif
