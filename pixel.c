@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/07 14:09:57 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:58:20 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,29 @@ int	interpolate_color(int color1, int color2, float t)
     return ((r << 16) | (g << 8) | b);
 }// Algorithme de Bresenham
 
+/****void ft_draw_line_b(t_data *data, t_projection start, t_projection end, int color)
+{
+    int step;
+    int x, y;
+    int delta_x, delta_y;
+
+    delta_x = x2 - x1;
+    delta_y = y2 - y1;
+    step = fmax(fabs(delta_x), fabs(delta_y)); // Utilisation de `fmax` pour éviter des erreurs
+
+    delta_x /= step;
+    delta_y /= step;
+
+    x = x1;
+    y = y1;
+
+    for (int i = 0; i <= step; i++)
+    {
+        my_mlx_pixel_put(data, round(x), round(y), color);
+        x += delta_x;
+        y += delta_y;
+    }
+}*/
 void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2)
 {
 	float dx, dy, sx, sy, err, e2;
@@ -233,7 +256,7 @@ t_offset	set_offset(t_data img)
 	t_offset		offset;
 	t_projection	middle;
 	
-	middle = project_3d_to_2d(img.x_max / 2, img.y_max / 2, 0, img);
+	middle = project_3d_to_2d(img.x_max / 2, img.y_max / 2, distance(img.z_max, img.z_min), img);
 	offset.x = 960 - middle.x;
 	offset.y = 540 - middle.y;
 	ft_draw_line_b(&img, 0, 0, middle.x + offset.x, middle.y + offset.y, 0x0, 0xFFFFFF);

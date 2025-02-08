@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/07 13:26:30 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 08:02:21 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,18 @@ typedef struct s_data
 	void				*mlx;
 	void				*win;
 	void				*img;
-	char				*addr;
 
 	struct s_coordinate	**coordinate;
 	struct s_angle		angle;
+	float				y_max;
+	float				x_max;
+	float				z_max;
+	float				z_min;
+	struct s_offset		offset;
+	struct s_offset		translate;
+	int					zoom;
 
-	float					y_max;
-	float					x_max;
-	float					z_max;
-	float					z_min;
-	struct s_offset			offset;
-	struct s_offset			translate;
-	int						zoom;
-
+	char				*addr;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;

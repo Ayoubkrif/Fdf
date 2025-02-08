@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/07 14:24:29 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:54:05 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	key_hook(int keycode, t_data *img)
 		img->angle.z = 0;
 		put_new_img(img);
 	}
-	if (keycode == KEY_ESC) // Touche ESC pour quitter
+	if (keycode == KEY_ESC)
 		exit(0);
-	if (keycode == KEY_SPACE) // Touche ESPACE pour lancer quadrillage
+	if (keycode == KEY_SPACE)
 	{
 		recurse(*img);
 		mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
@@ -87,6 +87,37 @@ int	key_hook(int keycode, t_data *img)
 	if (keycode == KEY_LEFT)
 	{
 		img->translate.x -= 10;
+		put_new_img(img);
+	}
+	if (keycode == KEY_2)
+	{
+		img->angle.x = 0;
+		img->angle.y = PI / 2;
+		img->angle.z = 0;
+		put_new_img(img);
+	}
+	if (keycode == KEY_1)
+	{
+		img->angle.x = PI / 2;
+		img->angle.y = 0;
+		img->angle.z = 0;
+		put_new_img(img);
+	}
+	if (keycode == KEY_3)
+	{
+		img->angle.x = 0;
+		img->angle.y = 0;
+		img->angle.z = PI / 2;
+		put_new_img(img);
+	}
+	if (keycode == KEY_4)
+	{
+//		img->angle.x = 0.615;
+//		img->angle.y = -0.7853981634;
+//		img->angle.z = 0;
+		img->angle.x = PI / 4;
+		img->angle.y = -PI / 6;
+		img->angle.z = 0;
 		put_new_img(img);
 	}
 	return (0);
@@ -117,11 +148,10 @@ int	translate_hook(int keycode, t_data *img)
 	return (0);
 }
 
-int mouse_press(int button, int x, int y, t_data *fdf)
+int	mouse_press(int button, int x, int y, t_data *fdf)
 {
-    (void)x;
-    (void)y;
-
+	(void)x;
+	(void)y;
 	if (button == MOUSE_WHEEL_UP)
 	{
 		fdf->zoom++;
@@ -132,7 +162,5 @@ int mouse_press(int button, int x, int y, t_data *fdf)
 		fdf->zoom--;
 		put_new_img(fdf);
 	}
-    return (0);
+	return (0);
 }
-
-

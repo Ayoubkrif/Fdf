@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/06 15:43:41 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 14:05:28 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 			if ((!i && !j) || (fdf->coordinate[i][j].z > fdf->z_max))
 				fdf->z_max = fdf->coordinate[i][j].z;
 			if ((!i && !j) || (fdf->coordinate[i][j].z < fdf->z_min))
-				fdf->z_max = fdf->coordinate[i][j].z;
+				fdf->z_min = fdf->coordinate[i][j].z;
 			if (lst->s[k] == ',')
 			{
 				k += 3;
@@ -87,6 +87,7 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 		i++;
 		lst = lst->next;
 	}
+	printf("min dand max : %f %f\n\n\n\n",fdf->z_max,fdf->z_min);
 	fdf->x_max = j;
 	fdf->y_max = i;
 }
