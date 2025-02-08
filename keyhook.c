@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/08 13:54:05 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 14:22:09 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,14 @@ int	key_hook(int keycode, t_data *img)
 		put_new_img(img);
 	}
 	return (0);
+}
+
+int close_window(t_data *data)
+{
+    printf("Fermeture via la croix\n");
+    mlx_destroy_window(data->mlx, data->win);
+    exit(0);
+    return (0);
 }
 
 int	translate_hook(int keycode, t_data *img)

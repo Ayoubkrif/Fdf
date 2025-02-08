@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/08 08:12:29 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 14:23:07 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int argc, char **argv)
 		return (1);
 	init_fdf(fd, map, &fdf);
 	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
+    mlx_hook(fdf.win, EVENT_DESTROY, 0, close_window, &fdf);
 	mlx_mouse_hook(fdf.win, mouse_press, &fdf);
 	mlx_loop(fdf.mlx);
 	liberator_int_tab(fdf.coordinate, fdf.y_max);
