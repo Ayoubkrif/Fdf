@@ -6,22 +6,11 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/08 19:08:53 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/09 15:23:53 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
-
-int	is_base(int c, char *base)
-{
-	while (*base)
-	{
-		if (c == *base)
-			return (1);
-		base++;
-	}
-	return (0);
-}
+#include "../lib.h"
 
 static int	count_words(const char *s, char *c)
 {
@@ -46,42 +35,76 @@ static int	count_words(const char *s, char *c)
 	return (words);
 }
 
+static int	skip_digits(char *s)
+{
+	int	k;
+
+	k = 0;
+	while (ft_isdigit(s[k]))
+		k++;
+	return (k);
+}
+
+static int	skip_whitespaces(char *s)
+{
+	int	k;
+
+	k = 0;
+	while (ft_isspace(s[k]))
+		k++;
+	return (k);
+}
+
+static int	set_color(char *s, int *result)
+{
+	int	colour;
+	int	k;
+
+	k = 0;
+	if (s[k] == ',')
+	{
+		k += 3;
+		*result = ft_atoi_base(&s[k], "0123456789ABCDEF");
+		colour = ft_atoi_base(&s[k], "0123456789abcdef");
+		if (colour > *result)
+				*result = colour;
+		while (is_base(s[k], "0123456789ABCDEFabcdef") != -1)
+			k++;
+	}
+	else
+		*result = 0x7f00ff	;
+	return (k);
+}
+
+static void	set_min_and_max_z(t_data *fdf, int i, int j, int z)
+{
+	if ((!i && !j) || z > fdf->z_max)
+		fdf->z_max = z;
+	if ((!i && !j) || z < fdf->z_min)
+		fdf->z_min = z;
+}
+
 void	fill_coordinate(t_list *lst, t_data *fdf)
 {
 	int		i;
 	int		j;
 	int		k;
+	int		n_words = count_words(lst->s, " \n");
 
 	fdf->coordinate = ft_calloc(ft_lstsize(lst), sizeof(t_coordinate *));
 	i = 0;
 	while (lst)
 	{
-		fdf->coordinate[i] = malloc(count_words(lst->s, " \n") * sizeof(t_coordinate));
+		fdf->coordinate[i] = malloc(n_words * sizeof(t_coordinate));
 		j = 0;
 		k = 0;
-		while (j < count_words(lst->s, " \n"))
+		while (j < n_words)
 		{
 			fdf->coordinate[i][j].z = ft_atoi(&(lst->s)[k]);
-			while (ft_isdigit((lst->s)[k]))
-				k++;
-			if ((!i && !j) || (fdf->coordinate[i][j].z > fdf->z_max))
-				fdf->z_max = fdf->coordinate[i][j].z;
-			if ((!i && !j) || (fdf->coordinate[i][j].z < fdf->z_min))
-				fdf->z_min = fdf->coordinate[i][j].z;
-			if (lst->s[k] == ',')
-			{
-				k += 3;
-				fdf->coordinate[i][j].colour = ft_atoi_base(&(lst->s[k]), "0123456789ABCDEF");
-				fdf->coordinate[i][j].colourh = ft_atoi_base(&(lst->s[k]), "0123456789abcdef");
-				if (fdf->coordinate[i][j].colourh > fdf->coordinate[i][j].colour)
-						fdf->coordinate[i][j].colour = fdf->coordinate[i][j].colourh;
-				while (is_base(lst->s[k], "0123456789ABCDEFabcdef"))
-					k++;
-			}
-			else
-				fdf->coordinate[i][j].colour = 0x7f00ff;
-			while ((lst->s)[k] == ' ' || (lst->s)[k] == '\n')
-				k++;
+			k += skip_digits(&lst->s[k]);
+			set_min_and_max_z(fdf, i, j, fdf->coordinate[i][j].z);
+			k += set_color(&lst->s[k], &fdf->coordinate[i][j].colour);
+			k += skip_whitespaces(&lst->s[k]);
 			j++;
 		}
 		i++;
@@ -102,24 +125,4 @@ void	liberator_int_tab(t_coordinate **tab, int line)
 		i++;
 	}
 	free(tab);
-}
-
-void	print_int_tab(t_coordinate **tab, int y, int x)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-		{
-			printf("%4f ", tab[i][j].z);
-			printf(",%8X", tab[i][j].colour);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 }

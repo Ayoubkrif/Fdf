@@ -6,7 +6,7 @@
 /*   By: aykrifa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:33:21 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/01/28 16:20:39 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/09 15:21:24 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 100000
 # endif
 
 # ifndef TRUE

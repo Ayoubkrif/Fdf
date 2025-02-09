@@ -6,7 +6,7 @@
 /*   By: aykrifa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:12:18 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/04 15:07:36 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/09 14:24:17 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static int	testbase(char *tab, unsigned int size)
 	return (1);
 }
 
-static int	isbase(char c, char *base, unsigned int size)
+int	is_base(char c, char *base)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (i < size)
+	while (base[i])
 	{
 		if (c == base[i])
 			return (i);
-	i++;
+		i++;
 	}
 	return (-1);
 }
@@ -73,10 +73,10 @@ int	ft_atoi_base(char *str, char *base)
 			s = -s;
 		i++;
 	}
-	while (isbase(str[i], base, size) != -1)
+	while (is_base(str[i], base) != -1)
 	{
 		r = r * size;
-		r = r + isbase(str[i++], base, size);
+		r = r + is_base(str[i++], base);
 	}
 	return (s * r);
 }

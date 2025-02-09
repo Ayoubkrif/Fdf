@@ -6,14 +6,11 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/08 22:22:42 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/09 14:00:47 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "lib.h"
-#include <math.h>
-#include <stdlib.h>
+#include "../lib.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -80,7 +77,7 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 	my_mlx_pixel_put(data, x2, y2, color2);
 }
 
-t_projection	init_projection(int	x, int	y)
+t_projection	init_projection(int x, int y)
 {
 	t_projection	point;
 

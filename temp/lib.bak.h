@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/08 22:12:55 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/08 14:22:36 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ typedef struct s_projection
 {
 	float	x;
 	float	y;
-	int		colour;
+	int	colour;
 }	t_projection;
 
 typedef struct s_coordinate
 {
 	float	z;
-	int		colour;
-	int		colourh;
+	int	colour;
+	int	colourh;
 }	t_coordinate;
 
-typedef struct s_vect
+typedef struct s_angle
 {
 	float	x;
 	float	y;
 	float	z;
-}	t_vect;
+}	t_angle;
 
 typedef struct s_offset
 {
@@ -46,34 +46,36 @@ typedef struct s_offset
 	float	y;
 }	t_offset;
 
-typedef struct s_option
+typedef struct s_display
 {
-	t_offset		offset;
-	t_offset		translate;
-	int					zoom;
-	t_vect				angle;
-}	t_option;
+	void		*mlx;
+	void		*win;
+	void		*img;
+} t_display;
 
 typedef struct s_data
 {
+	t_display			disp;
 	void				*mlx;
 	void				*win;
 	void				*img;
-	char				*addr;
 
 	t_coordinate	**coordinate;
+	t_angle		angle;
+	int					zoom;
+	t_offset		translate;
 
 	float				y_max;
 	float				x_max;
 	float				z_max;
 	float				z_min;
-	t_option			option;
+	t_offset		offset;
 
+	char				*addr;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
 }	t_data;
-
 
 # define TRUE 1
 # define OPEN_FAILURE -1
@@ -144,6 +146,7 @@ void			recurse(t_data img);
 void			quadrillage(t_data img);
 
 int				key_hook(int keycode, t_data *img);
+int			 	close_window(t_data *data);
 int				mouse_press(int button, int x, int y, t_data *fdf);
 int				translate_hook(int keycode, t_data *img);
 

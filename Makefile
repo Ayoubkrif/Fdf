@@ -1,61 +1,69 @@
-SRC = fdf.c parsing_fdf.c pixel.c \
-	  keyhook.c
+### COMPILATION ###
+CC      = gcc
+FLAGS  = -Wall -Wextra -Werror
 
-LBS = libft/libft.a
+### EXECUTABLE ###
+NAME   = fdf
 
-OBJ = $(SRC:.c=.o)
+### INCLUDES ###
+LIBFT  = libft
+OBJ_PATH  = objs
+SRC_PATH  = srcs
+MLX = minilibx-linux
 
-NAME = fdf
+### SOURCE FILES ###
+SOURCES = fdf.c parsing_fdf.c pixel.c \
+	  keyhook.c to_delete.c
 
-CC = gcc
+### OBJECTS ###
 
-CFLAGS = -Wall -Wextra -Werror -g
+SRCS = $(addprefix $(SRC_PATH)/,$(SOURCES))
+OBJS = $(addprefix $(OBJ_PATH)/,$(SOURCES:.c=.o))
 
-AR = ar rc
+### COLORS ###
+NOC         = \033[0m
+BOLD        = \033[1m
+UNDERLINE   = \033[4m
+BLACK       = \033[1;30m
+RED         = \033[1;31m
+GREEN       = \033[1;32m
+YELLOW      = \033[1;33m
+BLUE        = \033[1;34m
+VIOLET      = \033[1;35m
+CYAN        = \033[1;36m
+WHITE       = \033[1;37m
 
-all : $(NAME)
+### RULES ###
 
-$(NAME): $(OBJ)
-	make bonus -C libft
-	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LBS)  -lmlx -Lminilibx-linux -lXext -lX11 -lm 
+all: lib tmp $(NAME)
 
-$(OBJ) : $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC)
+lib:
+	@echo "$(GREEN)Creating lib files$(CYAN)"
+	@make bonus -C $(LIBFT)
+	@make -C $(MLX)
 
-libft/libft.a :
-	make -C libft
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) -L $(LIBFT) -L $(MLX) -o $@ $^ -lft -lmlx -lXext -lX11 -lm
+	@echo "$(GREEN)Project successfully compiled"
 
-clean :
-	make clean -C libft
-	rm -rf *.o
+tmp:
+	@mkdir -p objs
 
-fclean : clean
-	make fclean -C libft
-	rm -rf *.a
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@$(CC) $(FLAGS) -c -o $@ $<
+	@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(NOC)"
 
-re : fclean all
+clean:
+	@echo "$(GREEN)Supressing libraries files$(CYAN)"
+	@make clean -C $(LIBFT)
+	@rm -rf $(OBJ_PATH)
 
-bonus : all
+fclean:
+	@echo "$(GREEN)Supressing libraries files$(CYAN)"
+	@rm -rf $(OBJ_PATH)
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT)
 
-clean_libft :
-	make clean -C $(LBSDIR)
+re: fclean all
 
-fclean_libft :
-	make fclean -C $(LBSDIR)
-
-re_libft :
-	make re -C $(LBSDIR)
-
-clean_all : clean clean_libft
-
-fclean_all : clean_all fclean fclean_libft
-
-re_all : re_libft re
-
-test : all clean
-	@echo "real one"
-	@cc specifiercheck.c -L. libftprintf.a && ./a.out  1 | cat -e
-	@echo "mine"
-	@cc specifiercheck.c -L. libftprintf.a && ./a.out  | cat -e
-vtest : all
-	cc main.c -L. libftprintf.a && valgrind ./a.out
+.PHONY: temporary, re, fclean, clean
