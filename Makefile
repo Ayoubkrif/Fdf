@@ -37,10 +37,15 @@ WHITE       = \033[1;37m
 
 all: lib tmp $(NAME)
 
-lib:
+lib: mlx
 	@echo "$(GREEN)Creating lib files$(CYAN)"
 	@make bonus -C $(LIBFT)
-	@make -C $(MLX)
+
+mlx: $(MLX)
+	make -C $(MLX)
+
+$(MLX):
+	git clone https://github.com/42Paris/minilibx-linux.git $(MLX)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -L $(LIBFT) -L $(MLX) -o $@ $^ -lft -lmlx -lXext -lX11 -lm
