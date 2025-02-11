@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/09 15:51:18 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:12:29 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,38 @@ int	rotate_hook(int keycode, t_data *img)
 {
 	if (keycode == KEY_Q)
 	{
-		img->option.angle.x += PI / 12;
+		img->angle.x += PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	if (keycode == KEY_A)
 	{
-		img->option.angle.x -= PI / 12;
+		img->angle.x -= PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	if (keycode == KEY_W)
 	{
-		img->option.angle.y += PI / 12;
+		img->angle.y += PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	if (keycode == KEY_S)
 	{
-		img->option.angle.y -= PI / 12;
+		img->angle.y -= PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	if (keycode == KEY_E)
 	{
-		img->option.angle.z += PI / 12;
+		img->angle.z += PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	if (keycode == KEY_D)
 	{
-		img->option.angle.z -= PI / 12;
+		img->angle.z -= PI_24;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
 	return (view_hook(keycode, img));
@@ -90,11 +96,17 @@ int	view_hook(int keycode, t_data *img)
 {
 	if (keycode == KEY_0)
 	{
-		img->option.angle.x = 0;
-		img->option.angle.y = 0;
-		img->option.angle.z = 0;
+		img->angle.x = 0;
+		img->angle.y = 0;
+		img->angle.z = 0;
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
 	}
+	return (0);
+}
+
+int	colour_hook(int keycode, t_data *img)
+{
 	return (0);
 }
 

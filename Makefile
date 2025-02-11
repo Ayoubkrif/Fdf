@@ -13,7 +13,7 @@ MLX = minilibx-linux
 
 ### SOURCE FILES ###
 SOURCES = fdf.c parsing_fdf.c pixel.c \
-	  keyhook.c to_delete.c
+	  keyhook.c to_delete.c view.c
 
 ### OBJECTS ###
 
@@ -37,15 +37,10 @@ WHITE       = \033[1;37m
 
 all: lib tmp $(NAME)
 
-lib: mlx
+lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
 	@make bonus -C $(LIBFT)
-
-mlx: $(MLX)
-	make -C $(MLX)
-
-$(MLX):
-	git clone https://github.com/42Paris/minilibx-linux.git $(MLX)
+	@make -C $(MLX)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -L $(LIBFT) -L $(MLX) -o $@ $^ -lft -lmlx -lXext -lX11 -lm

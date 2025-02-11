@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/09 15:20:55 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/11 09:00:42 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ void	put_new_img(t_data *fdf)
 
 static void	base_option_init(t_data *fdf)
 {
-	fdf->option.angle.x = 0.615;
-	fdf->option.angle.y = -0.7853981634;
-	fdf->option.angle.z = 0;
+	fdf->angle.x = 0.615;
+	fdf->angle.y = -0.7853981634;
+	fdf->angle.z = 0;
+	fdf->option.angle = set_new_angle(fdf->angle);
 	fdf->option.zoom = 10;
 	fdf->option.translate.x = 0;
 	fdf->option.translate.y = 0;

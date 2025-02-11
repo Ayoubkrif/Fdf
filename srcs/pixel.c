@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/09 14:00:47 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:02:52 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,31 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	interpolate_color(int color1, int color2, float t)
 {
-    int r1 = (color1 >> 16) & 0xFF; // Rouge du point 1
-    int g1 = (color1 >> 8)  & 0xFF; // Vert du point 1
-    int b1 =  color1        & 0xFF; // Bleu du point 1
+	int	red;
+	int	green;
+	int	blue;
 
-    int r2 = (color2 >> 16) & 0xFF; // Rouge du point 2
-    int g2 = (color2 >> 8)  & 0xFF; // Vert du point 2
-    int b2 =  color2        & 0xFF; // Bleu du point 2
-
-    // 🔹 Interpolation linéaire pour chaque canal
-    int r = (int)(r1 + t * (r2 - r1));
-    int g = (int)(g1 + t * (g2 - g1));
-    int b = (int)(b1 + t * (b2 - b1));
-
-    // 🔹 Reconstruction de la couleur (format 0xRRGGBB)
-    return ((r << 16) | (g << 8) | b);
+	blue = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	color1 /= 256;
+	color2 /= 256;
+	green = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	green *= 256;
+	color1 /= 256;
+	color2 /= 256;
+	red = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	red *= 256 * 256;
+	return (red + green + blue);
 }
-// Algorithme de Bresenham
+
+t_projection	init_projection(int x, int y)
+{
+	t_projection	point;
+
+	point.x = x;
+	point.y = y;
+	return (point);
+}
+
 void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2)
 {
 	float dx, dy, sx, sy, err, e2;
@@ -63,27 +71,28 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 	{
 		t = 0 ;
 		if (length != 0)
-			t = (float)step / length;
-		color = interpolate_color(color1, color2, t);
+			t = step / length;
+		color = color1;
+		if (color1 != color2)
+			color = interpolate_color(color1, color2, t);
 		my_mlx_pixel_put(data, x1, y1, color);
-		if (x1 == x2 && y1 == y2)
+		if ((x1 == x2 && y1 == y2) || x1 >= 1920 || y1 >= 1079)
 			break ;
 		e2 = 2 * err;
-		if (e2 > -dy) { err -= dy; x1 += sx; }
-		if (e2 < dx) { err += dx; y1 += sy; }
+		if (e2 > -dy)
+		{
+			err -= dy;
+			x1 += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			y1 += sy;
+		}
 		step++;
 	}
 	my_mlx_pixel_put(data, x1, y1, color1);
 	my_mlx_pixel_put(data, x2, y2, color2);
-}
-
-t_projection	init_projection(int x, int y)
-{
-	t_projection	point;
-
-	point.x = x;
-	point.y = y;
-	return (point);
 }
 
 void	line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn)
@@ -95,20 +104,15 @@ t_projection	project_iso_bonus(t_coordinate point, int x, int y, t_option opt)
 {
 	t_projection	result;
 	t_vect			rot;
-	t_vect			temp;
+	float			tmp;
 
-	temp.y = cos(opt.angle.x) * y - sin(opt.angle.x) * point.z;
-	temp.z = sin(opt.angle.x) * y + cos(opt.angle.x) * point.z;
-	rot.y = temp.y;
-	rot.z = temp.z;
-	temp.x = cos(opt.angle.y) * x + sin(opt.angle.y) * rot.z;
-	temp.z = -sin(opt.angle.y) * x + cos(opt.angle.y) * rot.z;
-	rot.x = temp.x;
-	rot.z = temp.z;
-	temp.x = cos(opt.angle.z) * rot.x - sin(opt.angle.z) * rot.y;
-	temp.y = sin(opt.angle.z) * rot.x + cos(opt.angle.z) * rot.y;
-	rot.x = temp.x;
-	rot.y = temp.y;
+	rot.y = opt.angle.cos_x * y - opt.angle.sin_x * point.z;
+	rot.z = opt.angle.sin_x * y + opt.angle.cos_x * point.z;
+	rot.x = opt.angle.cos_y * x + opt.angle.sin_y * rot.z;
+	rot.z = -opt.angle.sin_y * x + opt.angle.cos_y * rot.z;
+	tmp = rot.x;
+	rot.x = opt.angle.cos_z * rot.x - opt.angle.sin_z * rot.y;
+	rot.y = opt.angle.sin_z * tmp + opt.angle.cos_z * rot.y;
 	result.x = opt.translate.x + opt.offset.x + (opt.zoom * rot.x);
 	result.y = opt.translate.y + opt.offset.y + (opt.zoom * rot.y);
 	result.colour = point.colour;
@@ -124,20 +128,15 @@ t_projection	project_3d_to_2d(int x, int y, int z, t_option opt)
 {
 	t_projection	result;
 	t_vect			rot;
-	t_vect			temp;
+	float			tmp;
 
-	temp.y = cos(opt.angle.x) * y - sin(opt.angle.x) * z;
-	temp.z = sin(opt.angle.x) * y + cos(opt.angle.x) * z;
-	rot.y = temp.y;
-	rot.z = temp.z;
-	temp.x = cos(opt.angle.y) * x + sin(opt.angle.y) * rot.z;
-	temp.z = -sin(opt.angle.y) * x + cos(opt.angle.y) * rot.z;
-	rot.x = temp.x;
-	rot.z = temp.z;
-	temp.x = cos(opt.angle.z) * rot.x - sin(opt.angle.z) * rot.y;
-	temp.y = sin(opt.angle.z) * rot.x + cos(opt.angle.z) * rot.y;
-	rot.x = temp.x;
-	rot.y = temp.y;
+	rot.y = opt.angle.cos_x * y - opt.angle.sin_x * z;
+	rot.z = opt.angle.sin_x * y + opt.angle.cos_x * z;
+	rot.x = opt.angle.cos_y * x + opt.angle.sin_y * rot.z;
+	rot.z = -opt.angle.sin_y * x + opt.angle.cos_y * rot.z;
+	tmp = rot.x;
+	rot.x = opt.angle.cos_z * rot.x - opt.angle.sin_z * rot.y;
+	rot.y = opt.angle.sin_z * tmp + opt.angle.cos_z * rot.y;
 	result.x = (opt.zoom * rot.x);
 	result.y = (opt.zoom * rot.y);
 	return (result);

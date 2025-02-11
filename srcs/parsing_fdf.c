@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/09 15:23:53 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/11 13:27:15 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	set_color(char *s, int *result)
 			k++;
 	}
 	else
-		*result = 0x7f00ff	;
+		*result = BASE_COLOR;
 	return (k);
 }
 
@@ -89,16 +89,21 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 	int		i;
 	int		j;
 	int		k;
-	int		n_words = count_words(lst->s, " \n");
 
-	fdf->coordinate = ft_calloc(ft_lstsize(lst), sizeof(t_coordinate *));
+	fdf->x_max = count_words(lst->s, " \n");
+	fdf->y_max = ft_lstsize(lst);
+	fdf->coordinate = ft_calloc(fdf->y_max, sizeof(t_coordinate *));
+	if (!fdf->coordinate)
+		exit(13);
 	i = 0;
 	while (lst)
 	{
-		fdf->coordinate[i] = malloc(n_words * sizeof(t_coordinate));
+		fdf->coordinate[i] = malloc(fdf->x_max * sizeof(t_coordinate));
+		if (!fdf->coordinate[i])
+			exit(14);
 		j = 0;
 		k = 0;
-		while (j < n_words)
+		while (j < fdf->x_max)
 		{
 			fdf->coordinate[i][j].z = ft_atoi(&(lst->s)[k]);
 			k += skip_digits(&lst->s[k]);
@@ -110,8 +115,6 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 		i++;
 		lst = lst->next;
 	}
-	fdf->x_max = j;
-	fdf->y_max = i;
 }
 
 void	liberator_int_tab(t_coordinate **tab, int line)

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/09 14:18:08 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:07:20 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ typedef struct s_vect
 	float	z;
 }	t_vect;
 
+typedef struct s_angle
+{
+	float	cos_x;
+	float	sin_x;
+	float	cos_y;
+	float	sin_y;
+	float	cos_z;
+	float	sin_z;
+}	t_angle;
+
 typedef struct s_offset
 {
 	float	x;
@@ -54,7 +64,7 @@ typedef struct s_option
 	t_offset		offset;
 	t_offset		translate;
 	int					zoom;
-	t_vect				angle;
+	t_angle				angle;
 }	t_option;
 
 typedef struct s_data
@@ -70,6 +80,7 @@ typedef struct s_data
 	float				x_max;
 	float				z_max;
 	float				z_min;
+	t_vect				angle;
 	t_option			option;
 
 	int					bits_per_pixel;
@@ -77,10 +88,10 @@ typedef struct s_data
 	int					endian;
 }	t_data;
 
-
 # define TRUE 1
 # define OPEN_FAILURE -1
 
+# define BASE_COLOR 0xffffff
 # define ANGLE 0.523598776
 # define STEP 1
 # define OFFSET 500
@@ -112,20 +123,21 @@ typedef struct s_data
 # define KEY_SHIFT       65505
 # define KEY_CTRL        65507
 # define KEY_ALT         65513
-// Clavier principal
+
 # define KEY_PLUS 61        // '+' sur clavier AZERTY
 # define KEY_MINUS 45       // '-' sur clavier AZERTY
 
-// Molette de la souris
 # define MOUSE_WHEEL_UP 4
 # define MOUSE_WHEEL_DOWN 5
 
-// Événements MLX
 # define EVENT_KEY_PRESS 2
 # define EVENT_KEY_RELEASE 3
 # define EVENT_MOUSE_PRESS 4
 # define EVENT_MOUSE_RELEASE 5
 # define EVENT_DESTROY 17
+
+# define PI_12 0.261799388
+# define PI_24 0.130899694
 
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(t_coordinate **tab, int line);
@@ -146,6 +158,7 @@ void			recurse(t_data img);
 //void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
 void			quadrillage(t_data img);
 
+t_angle			set_new_angle(t_vect angle);
 void			put_new_img(t_data *img);
 int				key_hook(int keycode, t_data *img);
 int				mouse_press(int button, int x, int y, t_data *fdf);
