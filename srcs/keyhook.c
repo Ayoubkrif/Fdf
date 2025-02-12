@@ -6,11 +6,13 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/12 11:14:47 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:05:48 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib.h"
+#include <bits/types/struct_timeval.h>
+#include <sys/time.h>
 
 int	view_hook(int keycode, t_data *img);
 int	rotate_hook(int keycode, t_data *img);
@@ -49,41 +51,25 @@ int	translate_hook(int keycode, t_data *img)
 
 int	rotate_hook(int keycode, t_data *img)
 {
-	if (keycode == KEY_Q)
+	if (keycode == KEY_Q || keycode == KEY_A
+		|| keycode == KEY_W || keycode == KEY_S
+		|| keycode == KEY_E || keycode == KEY_D)
 	{
-		img->angle.x += PI_24;
+		if (keycode == KEY_A)
+			img->angle.x -= PI_24;
+		else if (keycode == KEY_Q)
+			img->angle.x += PI_24;
+		else if (keycode == KEY_S)
+			img->angle.y -= PI_24;
+		else if (keycode == KEY_W)
+			img->angle.y += PI_24;
+		else if (keycode == KEY_D)
+			img->angle.z -= PI_24;
+		else if (keycode == KEY_E)
+			img->angle.z += PI_24;
 		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
-	}
-	if (keycode == KEY_A)
-	{
-		img->angle.x -= PI_24;
-		img->option.angle = set_new_angle(img->angle);
-		put_new_img(img);
-	}
-	if (keycode == KEY_W)
-	{
-		img->angle.y += PI_24;
-		img->option.angle = set_new_angle(img->angle);
-		put_new_img(img);
-	}
-	if (keycode == KEY_S)
-	{
-		img->angle.y -= PI_24;
-		img->option.angle = set_new_angle(img->angle);
-		put_new_img(img);
-	}
-	if (keycode == KEY_E)
-	{
-		img->angle.z += PI_24;
-		img->option.angle = set_new_angle(img->angle);
-		put_new_img(img);
-	}
-	if (keycode == KEY_D)
-	{
-		img->angle.z -= PI_24;
-		img->option.angle = set_new_angle(img->angle);
-		put_new_img(img);
+		return (0);
 	}
 	return (view_hook(keycode, img));
 }
@@ -105,8 +91,9 @@ int	view_hook(int keycode, t_data *img)
 
 int	mouse_press(int button, int x, int y, t_data *fdf)
 {
-	(void)x;
-	(void)y;
+	struct timeval t;
+	t_offset s;
+
 	if (button == MOUSE_WHEEL_UP)
 	{
 		fdf->option.zoom++;
@@ -117,5 +104,42 @@ int	mouse_press(int button, int x, int y, t_data *fdf)
 		fdf->option.zoom--;
 		put_new_img(fdf);
 	}
+
+
+	gettimeofday(&t, NULL);
+	long elapsed_ms = (t.tv_sec - fdf->time.tv_sec) * 1000 +
+                      (t.tv_usec - fdf->time.tv_usec) / 1000;
+    if (elapsed_ms < 30)
+        return (1);
+    // Mettre à jour le dernier temps de clic
+    fdf->time = t;
+	if (button == 1)
+    {
+        s.x = x - 960;
+        s.y = y - 540;
+
+        // Rotation plus fluide : proportionnelle à la distance au centre
+        fdf->angle.x += (s.x > 0) ? 0.01 : -0.01;
+        fdf->angle.y += (s.y > 0) ? 0.01 : -0.01;
+
+        put_new_img(fdf);
+    }
+	else if (button == 1)
+    {
+        s.x = x - 960;
+        s.y = y - 540;
+
+        if (s.x > 0)
+            fdf->angle.x -= PI_24;
+        else
+            fdf->angle.x += PI_24;
+
+        if (s.y > 0)
+            fdf->angle.y -= PI_24;
+        else
+            fdf->angle.y += PI_24;
+
+        put_new_img(fdf);
+    }
 	return (0);
 }

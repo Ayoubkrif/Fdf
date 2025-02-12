@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/12 11:33:15 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:49:01 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	erase_image(t_data *fdf)
 
 void	put_new_img(t_data *fdf)
 {
-//	mlx_destroy_image(fdf->mlx, fdf->img);
-//	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
-	erase_image(fdf);
+	mlx_destroy_image(fdf->mlx, fdf->img);
+	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
+//	erase_image(fdf);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
 	print_header(fdf);
@@ -81,7 +81,7 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
-	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
+	gettimeofday(&fdf->time, NULL);
 }
 
 int	exit_fdf(t_data *fdf)

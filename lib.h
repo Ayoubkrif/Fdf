@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/12 11:14:28 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:34:05 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
+#include <bits/types/struct_timeval.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
 # include <math.h>
+# include <sys/time.h>
 
 typedef struct s_projection
 {
@@ -82,6 +84,7 @@ typedef struct s_data
 	float				z_min;
 	t_vect				angle;
 	t_option			option;
+	struct timeval		time;
 
 	int					bits_per_pixel;
 	int					line_length;
