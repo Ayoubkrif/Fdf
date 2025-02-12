@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/11 09:00:42 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 11:33:15 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,25 @@ static t_list	*init_map_lst(t_list *map, int fd)
 	return (map);
 }
 
+void	print_header(t_data *fdf)
+{
+	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
+}
+
+void	erase_image(t_data *fdf)
+{
+	ft_memset(fdf->img, 0, (1920 * 1080 * sizeof(int)));
+}
+
+
 void	put_new_img(t_data *fdf)
 {
-	mlx_destroy_image(fdf->mlx, fdf->img);
-	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
+//	mlx_destroy_image(fdf->mlx, fdf->img);
+//	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
+	erase_image(fdf);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
+	print_header(fdf);
 	recurse(*fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }
@@ -68,6 +81,17 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
+	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
+}
+
+int	exit_fdf(t_data *fdf)
+{
+	mlx_destroy_image(fdf->mlx, fdf->img);
+	mlx_destroy_window(fdf->mlx, fdf->win);
+	mlx_destroy_display(fdf->mlx);
+	free(fdf->mlx);
+	liberator_int_tab(fdf->coordinate, fdf->y_max);
+	exit(15);
 }
 
 int	main(int argc, char **argv)
@@ -85,6 +109,7 @@ int	main(int argc, char **argv)
 	init_fdf(fd, map, &fdf);
 	close(fd);
 	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
+	mlx_hook(fdf.win, 17, 1L << 0, exit_fdf, &fdf);
 	mlx_mouse_hook(fdf.win, mouse_press, &fdf);
 	mlx_loop(fdf.mlx);
 }

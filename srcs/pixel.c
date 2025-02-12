@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/11 14:02:52 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 09:15:22 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	if (x >= 0 && x < 1920 && y >= 0 && y < 1080)
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		dst = data->addr + (y * data->line_length
+				+ x * (data->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }
@@ -52,21 +53,20 @@ t_projection	init_projection(int x, int y)
 
 void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2)
 {
-	float dx, dy, sx, sy, err, e2;
 	float	length = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2- y1));
 	int		step = 0;
 	int 	color;
 	float	t;
 
-	dx = abs(x2 - x1);
-	dy = abs(y2 - y1);
-	sx = -1;
+	int dx = abs(x2 - x1);
+	int dy = abs(y2 - y1);
+	int sx = -1;
 	if (x1 < x2)
 		sx = 1;
-	sy = -1;
+	int sy = -1;
 	if (y1 < y2)
 		sy = 1;
-	err = dx - dy;
+	int err = dx - dy;
 	while (TRUE)
 	{
 		t = 0 ;
@@ -78,7 +78,7 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 		my_mlx_pixel_put(data, x1, y1, color);
 		if ((x1 == x2 && y1 == y2) || x1 >= 1920 || y1 >= 1079)
 			break ;
-		e2 = 2 * err;
+		int e2 = 2 * err;
 		if (e2 > -dy)
 		{
 			err -= dy;
@@ -100,7 +100,7 @@ void	line(t_data img, t_projection current, t_projection next, int xc, int yc, i
 	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, img.coordinate[yc][xc].colour, img.coordinate[yn][xn].colour); //jaune
 }
 
-t_projection	project_iso_bonus(t_coordinate point, int x, int y, t_option opt)
+t_projection	project_iso(t_coordinate point, int x, int y, t_option opt)
 {
 	t_projection	result;
 	t_vect			rot;
@@ -168,15 +168,15 @@ void	recurse(t_data fdf)
 		y = 0;
 		while (y < fdf.y_max)
 		{
-			current = project_iso_bonus(fdf.coordinate[y][x], x, y, fdf.option);
+			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
 			if (x + 1 < fdf.x_max)
 			{
-				next = project_iso_bonus(fdf.coordinate[y][x + 1], x + 1, y, fdf.option);
+				next = project_iso(fdf.coordinate[y][x + 1], x + 1, y, fdf.option);
 				line(fdf, current, next, x, y, x + 1, y); //jaune
 			}
 			if (y + 1 < fdf.y_max)
 			{
-				next = project_iso_bonus(fdf.coordinate[y + 1][x], x, y + 1, fdf.option);
+				next = project_iso(fdf.coordinate[y + 1][x], x, y + 1, fdf.option);
 				line(fdf, current, next, x, y, x, y + 1); //jaune
 			}
 			y++;

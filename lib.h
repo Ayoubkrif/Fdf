@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/11 14:07:20 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 11:14:28 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 
 typedef struct s_projection
 {
-	float	x;
-	float	y;
+	int	x;
+	int	y;
 	int		colour;
 }	t_projection;
 
 typedef struct s_coordinate
 {
-	float	z;
+	int	z;
 	int		colour;
 	int		colourh;
 }	t_coordinate;
@@ -55,8 +55,8 @@ typedef struct s_angle
 
 typedef struct s_offset
 {
-	float	x;
-	float	y;
+	int	x;
+	int	y;
 }	t_offset;
 
 typedef struct s_option
@@ -142,6 +142,7 @@ typedef struct s_data
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(t_coordinate **tab, int line);
 void			print_int_tab(t_coordinate **tab, int y, int x);
+int				exit_fdf(t_data *fdf);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Algorithme de Bresenham

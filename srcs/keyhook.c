@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/11 14:12:29 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/12 11:14:47 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int	rotate_hook(int keycode, t_data *img);
 int	key_hook(int keycode, t_data *img)
 {
 	if (keycode == KEY_ESC)
-	{
-		liberator_int_tab(img->coordinate, img->y_max);
-		mlx_destroy_image(img->mlx, img->img);
-		exit(0);
-	}
+		exit_fdf(img);
 	return (translate_hook(keycode, img));
 }
 
@@ -105,10 +101,7 @@ int	view_hook(int keycode, t_data *img)
 	return (0);
 }
 
-int	colour_hook(int keycode, t_data *img)
-{
-	return (0);
-}
+//int	colour_hook(int keycode, t_data *img){return (0);}
 
 int	mouse_press(int button, int x, int y, t_data *fdf)
 {
