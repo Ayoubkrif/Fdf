@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/14 11:43:23 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:40:33 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
-	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
 }
 
 int	exit_fdf(t_data *fdf)

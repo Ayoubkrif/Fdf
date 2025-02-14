@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/12 09:15:22 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:45:43 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 
 void	line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn)
 {
-	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, img.coordinate[yc][xc].colour, img.coordinate[yn][xn].colour); //jaune
+	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, img.coordinate[yc][xc].colour, img.coordinate[yn][xn].colour);
 }
 
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt)
@@ -172,12 +172,12 @@ void	recurse(t_data fdf)
 			if (x + 1 < fdf.x_max)
 			{
 				next = project_iso(fdf.coordinate[y][x + 1], x + 1, y, fdf.option);
-				line(fdf, current, next, x, y, x + 1, y); //jaune
+				line(fdf, current, next, x, y, x + 1, y);
 			}
 			if (y + 1 < fdf.y_max)
 			{
 				next = project_iso(fdf.coordinate[y + 1][x], x, y + 1, fdf.option);
-				line(fdf, current, next, x, y, x, y + 1); //jaune
+				line(fdf, current, next, x, y, x, y + 1);
 			}
 			y++;
 		}
