@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:12:50 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/14 11:50:08 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:30:10 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	mouse_press(int button, int x, int y, t_data *fdf)
 		fdf->option.zoom--;
 		put_new_img(fdf);
 	}
-	else if (button == 1) // Clic gauche enfoncé
+	if (button == 1)
 		fdf->mouse_pressed = 1;
 	return (0);
 }
@@ -39,7 +39,7 @@ int	mouse_move(int x, int y, t_data *fdf)
 	if (now - fdf->time < 60)
 		return (0);
 	fdf->time = now;
-	if (fdf->mouse_pressed) // Si clic gauche maintenu
+	if (fdf->mouse_pressed)
 	{
 		fdf->option.translate.x = x - 960;
 		fdf->option.translate.y = y - 540;
@@ -52,8 +52,7 @@ int	mouse_release(int button, int x, int y, t_data *fdf)
 {
 	(void)x;
 	(void)y;
-
-	if (button == 1) // Relâchement du clic gauche
+	if (button == 1)
 		fdf->mouse_pressed = 0;
 	return (0);
 }
