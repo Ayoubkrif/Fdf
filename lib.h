@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/14 11:42:59 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/15 08:56:04 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,16 @@ void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
 t_projection	init_projection(int x, int y);
 //void			line(t_data img, t_projection current, t_projection next, int coulour);
 void			line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn);
-//void			recurse(t_data img, t_projection current, t_projection end);
-void			recurse(t_data img);
-//void			quadrillage(t_data img, t_projection start, int n_x, int n_y);
-void			quadrillage(t_data img);
+t_projection	project_iso(t_coordinate point, int x, int y, t_option opt);
 
+void			start_fdf(t_data *fdf);
+t_offset		set_offset(t_data img);
 t_angle			set_new_angle(t_vect angle);
+void			put_from_0_0(t_data fdf);
+void			put_from_0_xmax(t_data fdf);
+void			put_from_ymax_0(t_data fdf);
+void			put_from_ymax_xmax(t_data fdf);
+
 void			put_new_img(t_data *img);
 
 int				key_hook(int keycode, t_data *img);

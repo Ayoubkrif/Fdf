@@ -13,7 +13,8 @@ MLX = minilibx-linux
 
 ### SOURCE FILES ###
 SOURCES = fdf.c parsing_fdf.c pixel.c \
-	  keyhook.c to_delete.c view.c mouse_hook.c
+	  keyhook.c to_delete.c view.c \
+		mouse_hook.c put_fdf.c
 
 ### OBJECTS ###
 

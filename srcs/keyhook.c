@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/14 16:21:04 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/15 12:59:35 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int	key_hook(int keycode, t_data *img)
 {
 	if (keycode == KEY_ESC)
 		exit_fdf(img);
-	if (view_hook(keycode, img)
+	if (rotate_hook(keycode, img)
 		|| translate_hook(keycode, img)
-		|| rotate_hook(keycode, img))
+		|| view_hook(keycode, img))
+	{
+		img->option.angle = set_new_angle(img->angle);
 		put_new_img(img);
+	}
 	return (0);
 }
 
@@ -72,7 +75,6 @@ int	view_hook(int keycode, t_data *img)
 		img->angle.y = 0;
 		img->angle.z = 0;
 	}
-	img->option.angle = set_new_angle(img->angle);
 	return (keycode == KEY_0);
 }
 //int	colour_hook(int keycode, t_data *img){return (0);}

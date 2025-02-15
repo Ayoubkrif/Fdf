@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/14 16:40:33 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/15 13:21:01 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	put_new_img(t_data *fdf)
 //	ft_bzero(fdf->addr, 1920 * 1080 * (fdf->bits_per_pixel / 8));
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
-	recurse(*fdf);
+	start_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }
 

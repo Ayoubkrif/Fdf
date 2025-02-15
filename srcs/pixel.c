@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/14 16:45:43 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/15 12:16:39 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 		if (color1 != color2)
 			color = interpolate_color(color1, color2, t);
 		my_mlx_pixel_put(data, x1, y1, color);
-		if ((x1 == x2 && y1 == y2) || x1 >= 1920 || y1 >= 1079)
+		if ((x1 == x2 && y1 == y2) || x1 >= 1919 || y1 >= 1079)
 			break ;
 		int e2 = 2 * err;
 		if (e2 > -dy)
@@ -154,36 +154,6 @@ t_offset	set_offset(t_data img)
 	return (offset);
 }
 
-void	recurse(t_data fdf)
-{
-	t_projection	next;
-	t_projection	current;
-	int				x;
-	int				y;
-
-	x = 0;
-	fdf.option.offset = set_offset(fdf);
-	while (x < fdf.x_max)
-	{
-		y = 0;
-		while (y < fdf.y_max)
-		{
-			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
-			if (x + 1 < fdf.x_max)
-			{
-				next = project_iso(fdf.coordinate[y][x + 1], x + 1, y, fdf.option);
-				line(fdf, current, next, x, y, x + 1, y);
-			}
-			if (y + 1 < fdf.y_max)
-			{
-				next = project_iso(fdf.coordinate[y + 1][x], x, y + 1, fdf.option);
-				line(fdf, current, next, x, y, x, y + 1);
-			}
-			y++;
-		}
-		x++;
-	}
-}
 
 /*
 t_projection	project_3d_to_2d(int x, int y, int z, t_data img)
