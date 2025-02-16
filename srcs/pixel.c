@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/15 12:16:39 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 13:49:34 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 		if (color1 != color2)
 			color = interpolate_color(color1, color2, t);
 		my_mlx_pixel_put(data, x1, y1, color);
-		if ((x1 == x2 && y1 == y2) || x1 >= 1919 || y1 >= 1079)
+		if ((x1 == x2 && y1 == y2))
 			break ;
 		int e2 = 2 * err;
 		if (e2 > -dy)

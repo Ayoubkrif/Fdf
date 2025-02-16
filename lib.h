@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/15 08:56:04 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 13:56:30 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_coordinate
 {
 	int	z;
 	int		colour;
-	int		colourh;
 }	t_coordinate;
 
 typedef struct s_vect
@@ -84,6 +83,7 @@ typedef struct s_data
 	t_vect				angle;
 	t_option			option;
 	int					mouse_pressed;
+	int					render_from;
 	time_t				time;
 
 	int					bits_per_pixel;
@@ -91,14 +91,15 @@ typedef struct s_data
 	int					endian;
 }	t_data;
 
-# define TRUE 1
 # define OPEN_FAILURE -1
 
 # define BASE_COLOR 0xffffff
 # define ANGLE 0.523598776
 # define STEP 1
 # define OFFSET 500
+
 # define PI 3.14159265358979323846
+
 # define KEY_ESC         65307
 # define KEY_W           119
 # define KEY_A           97
@@ -126,10 +127,8 @@ typedef struct s_data
 # define KEY_SHIFT       65505
 # define KEY_CTRL        65507
 # define KEY_ALT         65513
-
-# define KEY_PLUS 61        // '+' sur clavier AZERTY
-# define KEY_MINUS 45       // '-' sur clavier AZERTY
-
+# define KEY_PLUS 61
+# define KEY_MINUS 45
 # define MOUSE_WHEEL_UP 4
 # define MOUSE_WHEEL_DOWN 5
 
@@ -142,20 +141,21 @@ typedef struct s_data
 # define PI_12 0.261799388
 # define PI_24 0.130899694
 
+# define WAIT 0
+# define READY 1
+# define UP_LEFT 0
+# define UP_RIGHT 1
+# define DOWN_LEFT 2
+# define DOWN_RIGHT 3
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			liberator_int_tab(t_coordinate **tab, int line);
 void			print_int_tab(t_coordinate **tab, int y, int x);
 int				exit_fdf(t_data *fdf);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
-// Algorithme de Bresenham
-//void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color);
 void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2);
-//algo qui fonctionne
 void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
-//void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
 t_projection	init_projection(int x, int y);
-//void			line(t_data img, t_projection current, t_projection next, int coulour);
 void			line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn);
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt);
 
@@ -170,7 +170,6 @@ void			put_from_ymax_xmax(t_data fdf);
 void			put_new_img(t_data *img);
 
 int				key_hook(int keycode, t_data *img);
-int				translate_hook(int keycode, t_data *img);
 
 int				mouse_press(int button, int x, int y, t_data *fdf);
 int				mouse_move(int x, int y, t_data *fdf);

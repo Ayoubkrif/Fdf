@@ -1,6 +1,6 @@
 ### COMPILATION ###
 CC      = gcc
-FLAGS  = -Wall -Wextra -Werror
+FLAGS  = -Wall -Wextra -Werror -g3
 
 ### EXECUTABLE ###
 NAME   = fdf

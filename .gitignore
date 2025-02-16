@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
-
+fdf
+minilibx*/
+objs/
+*.c
+*/*.o
 # Object files
 *.ko
 *.obj

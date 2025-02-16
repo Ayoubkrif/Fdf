@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/15 13:21:01 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 13:55:22 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,6 @@ static t_list	*init_map_lst(t_list *map, int fd)
 	return (map);
 }
 
-void	print_header(t_data *fdf)
-{
-	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
-}
-
-void	erase_image(t_data *fdf)
-{
-	ft_memset(fdf->img, 0, (1920 * 1080 * sizeof(int)));
-}
-
-time_t    get_time_in_ms(void)
-{
-    struct timeval    tv;
-
-    gettimeofday(&tv, NULL);
-    return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-void	put_new_img(t_data *fdf)
-{
-	mlx_destroy_image(fdf->mlx, fdf->img);
-	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
-//	ft_bzero(fdf->addr, 1920 * 1080 * (fdf->bits_per_pixel / 8));
-	fdf->addr = mlx_get_data_addr(fdf->img,
-			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
-	start_fdf(fdf);
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
-}
-
 static void	base_option_init(t_data *fdf)
 {
 	fdf->angle.x = 0.615;
@@ -72,6 +43,7 @@ static void	base_option_init(t_data *fdf)
 	fdf->option.translate.x = 0;
 	fdf->option.translate.y = 0;
 	fdf->mouse_pressed = 0;
+	fdf->render_from = 0;
 	fdf->time = get_time_in_ms();
 }
 
@@ -89,6 +61,7 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
+	put_new_img(fdf);
 }
 
 int	exit_fdf(t_data *fdf)
@@ -117,9 +90,9 @@ int	main(int argc, char **argv)
 	close(fd);
 	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
 	mlx_hook(fdf.win, 17, 1L << 0, exit_fdf, &fdf);
-	mlx_hook(fdf.win, 4, 1L << 2, mouse_press, &fdf);   // Clic souris
-	mlx_hook(fdf.win, 5, 1L << 3, mouse_release, &fdf); // Relâchement souris
-	mlx_hook(fdf.win, 6, 1L << 6, mouse_move, &fdf);    // Mouvement souris
+	mlx_hook(fdf.win, 4, 1L << 2, mouse_press, &fdf);
+	mlx_hook(fdf.win, 5, 1L << 3, mouse_release, &fdf);
+	mlx_hook(fdf.win, 6, 1L << 6, mouse_move, &fdf);
 	mlx_mouse_hook(fdf.win, mouse_press, &fdf);
 	mlx_loop(fdf.mlx);
 }

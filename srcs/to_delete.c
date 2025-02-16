@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:21:40 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/12 09:16:01 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 13:24:10 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,22 @@ void	print_int_tab(t_coordinate **tab, int y, int x)
 		printf("\n");
 		i++;
 	}
+}
+
+void	print_header(t_data *fdf)
+{
+	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF,"caca : <X>");
+}
+
+void	erase_image(t_data *fdf)
+{
+	ft_memset(fdf->img, 0, (1920 * 1080 * sizeof(int)));
+}
+
+time_t    get_time_in_ms(void)
+{
+    struct timeval    tv;
+
+    gettimeofday(&tv, NULL);
+    return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
