@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/16 14:35:43 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:11:57 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,41 @@ int	interpolate_color(int color1, int color2, float t)
 	return (red + green + blue);
 }
 
+int	negative_interpolate(int color1, int color2, float t)
+{
+	int	red;
+	int	green;
+	int	blue;
+
+	blue = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
+	color1 /= 256;
+	color2 /= 256;
+	green = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
+	green *= 256;
+	color1 /= 256;
+	color2 /= 256;
+	red = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
+	red *= 256 * 256;
+	return (red + green + blue);
+}
+
+/*int	ground_interpolate(t_data *fdf)*/
+/*{*/
+/*	static int	height;*/
+/**/
+/*	height = fdf->z_max - fdf->z_min	*/
+/*}*/
+
+int	get_color(int	color1, int	color2, float t, t_data *fdf)
+{
+	if (fdf->option.colour == 1)
+		return (256 * 256 * 256);
+	if (fdf->option.colour == 2)
+		return (negative_interpolate(color1, color2, t));
+	else
+		return (interpolate_color(color1, color2, t));
+}
+
 t_projection	init_projection(int x, int y)
 {
 	t_projection	point;
@@ -72,9 +107,10 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 		t = 0 ;
 		if (length != 0)
 			t = step / length;
-		color = color1;
-		if (color1 != color2)
-			color = interpolate_color(color1, color2, t);
+		if  (color1 == color2)
+			color = get_color(color1, color1, t, data);
+		else
+			color = get_color(color1, color2, t, data);
 		my_mlx_pixel_put(data, x1, y1, color);
 		if ((x1 == x2 && y1 == y2))
 			break ;
@@ -95,14 +131,14 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 	my_mlx_pixel_put(data, x2, y2, color2);
 }
 
-void	line(t_data fdf, t_projection current, t_projection c, t_projection n)
+void	line(t_data *fdf, t_projection current, t_projection c, t_projection n)
 {
 	t_projection	next;
 
-	next = project_iso(fdf.coordinate[n.y][n.x], n.x, n.y, fdf.option);
-	ft_draw_line_b(&fdf, current.x, current.y, next.x, next.y,
-		fdf.coordinate[c.y][c.x].colour,
-		fdf.coordinate[n.y][n.x].colour);
+	next = project_iso(fdf->coordinate[n.y][n.x], n.x, n.y, fdf->option);
+	ft_draw_line_b(fdf, current.x, current.y, next.x, next.y,
+		fdf->coordinate[c.y][c.x].colour,
+		fdf->coordinate[n.y][n.x].colour);
 }
 
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt)

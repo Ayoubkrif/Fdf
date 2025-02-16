@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 14:31:11 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:11:05 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ typedef struct s_option
 	t_offset		translate;
 	int					zoom;
 	t_angle				angle;
+	int				colour;
 }	t_option;
 
 typedef struct s_data
 {
+	char				*map;
 	void				*mlx;
 	void				*win;
 	void				*img;
@@ -107,6 +109,7 @@ typedef struct s_data
 # define KEY_D           100
 # define KEY_Q           113
 # define KEY_E           101
+# define KEY_C           99
 # define KEY_UP          65362
 # define KEY_DOWN        65364
 # define KEY_LEFT        65361
@@ -156,16 +159,12 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2);
 void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
 t_projection	init_projection(int x, int y);
-void			line(t_data img, t_projection current, t_projection c, t_projection n);
+void			line(t_data *img, t_projection current, t_projection c, t_projection n);
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt);
 
 void			start_fdf(t_data *fdf);
 t_offset		set_offset(t_data img);
 t_angle			set_new_angle(t_vect angle);
-void			put_from_0_0(t_data fdf);
-void			put_from_0_xmax(t_data fdf);
-void			put_from_ymax_0(t_data fdf);
-void			put_from_ymax_xmax(t_data fdf);
 
 void			put_new_img(t_data *img);
 

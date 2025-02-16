@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:36:55 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 14:35:31 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:11:28 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,102 @@ static t_projection	iv(int x, int y)
 	return (point);
 }
 
+void	put_from_0_0(t_data *fdf)
+{
+	t_projection	current;
+	int				x;
+	int				y;
+
+	x = 0;
+	while (x < fdf->x_max)
+	{
+		y = 0;
+		while (y < fdf->y_max)
+		{
+			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
+			if (x + 1 < fdf->x_max)
+				line(fdf, current, iv(x, y), iv(x + 1, y));
+			if (y + 1 < fdf->y_max)
+				line(fdf, current, iv(x, y), iv(x, y + 1));
+			if (x + 1 < fdf->x_max && y + 1 < fdf->y_max)
+				line(fdf, current, iv(x, y), iv(x + 1, y + 1));
+			if (x + 1 < fdf->x_max && y - 1 >= 0)
+				line(fdf, current, iv(x, y), iv(x + 1, y - 1));
+			y++;
+		}
+		x++;
+	}
+}
+
+void	put_from_0_xmax(t_data *fdf)
+{
+	t_projection	current;
+	int				x;
+	int				y;
+
+	x = fdf->x_max - 1;
+	while (x >= 0)
+	{
+		y = 0;
+		while (y < fdf->y_max)
+		{
+			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
+			if (x - 1 >= 0)
+				line(fdf, current, iv(x, y), iv(x - 1, y));
+			if (y + 1 < fdf->y_max)
+				line(fdf, current, iv(x, y), iv(x, y + 1));
+			y++;
+		}
+		x--;
+	}
+}
+
+void	put_from_ymax_0(t_data *fdf)
+{
+	t_projection	current;
+	int				x;
+	int				y;
+
+	x = 0;
+	while (x < fdf->x_max)
+	{
+		y = fdf->y_max - 1;
+		while (y >= 0)
+		{
+			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
+			if (x + 1 < fdf->x_max)
+				line(fdf, current, iv(x, y), iv(x + 1, y));
+			if (y - 1 >= 0)
+				line(fdf, current, iv(x, y), iv(x, y - 1));
+			y--;
+		}
+		x++;
+	}
+}
+
+void	put_from_ymax_xmax(t_data *fdf)
+{
+	t_projection	current;
+	int				x;
+	int				y;
+
+	x = fdf->x_max - 1;
+	while (x >= 0)
+	{
+		y = fdf->y_max - 1;
+		while (y >= 0)
+		{
+			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
+			if (x - 1 >= 0)
+				line(fdf, current, iv(x, y), iv(x - 1, y));
+			if (y - 1 >= 0)
+				line(fdf, current, iv(x, y), iv(x, y - 1));
+			y--;
+		}
+		x--;
+	}
+}
+
 void	start_fdf(t_data *fdf)
 {
 	int	render;
@@ -32,107 +128,12 @@ void	start_fdf(t_data *fdf)
 		360 * fdf->angle.y / (PI * 2),
 		360 * fdf->angle.z / (PI * 2));
 	if (render == UP_LEFT)
-		put_from_0_0(*fdf);
+		put_from_0_0(fdf);
 	else if (render == UP_RIGHT)
-		put_from_0_xmax(*fdf);
+		put_from_0_xmax(fdf);
 	else if (render == DOWN_LEFT)
-		put_from_ymax_0(*fdf);
+		put_from_ymax_0(fdf);
 	else
-		put_from_ymax_xmax(*fdf);
+		put_from_ymax_xmax(fdf);
 }
 
-void	put_from_0_0(t_data fdf)
-{
-	t_projection	current;
-	int				x;
-	int				y;
-
-	x = 0;
-	while (x < fdf.x_max)
-	{
-		y = 0;
-		while (y < fdf.y_max)
-		{
-			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
-			if (x + 1 < fdf.x_max)
-				line(fdf, current, iv(x, y), iv(x + 1, y));
-			if (y + 1 < fdf.y_max)
-				line(fdf, current, iv(x, y), iv(x, y + 1));
-			if (x + 1 < fdf.x_max && y + 1 < fdf.y_max)
-				line(fdf, current, iv(x, y), iv(x + 1, y + 1));
-			if (x + 1 < fdf.x_max && y - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x + 1, y - 1));
-			y++;
-		}
-		x++;
-	}
-}
-
-void	put_from_0_xmax(t_data fdf)
-{
-	t_projection	current;
-	int				x;
-	int				y;
-
-	x = fdf.x_max - 1;
-	while (x >= 0)
-	{
-		y = 0;
-		while (y < fdf.y_max)
-		{
-			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
-			if (x - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x - 1, y));
-			if (y + 1 < fdf.y_max)
-				line(fdf, current, iv(x, y), iv(x, y + 1));
-			y++;
-		}
-		x--;
-	}
-}
-
-void	put_from_ymax_0(t_data fdf)
-{
-	t_projection	current;
-	int				x;
-	int				y;
-
-	x = 0;
-	while (x < fdf.x_max)
-	{
-		y = fdf.y_max - 1;
-		while (y >= 0)
-		{
-			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
-			if (x + 1 < fdf.x_max)
-				line(fdf, current, iv(x, y), iv(x + 1, y));
-			if (y - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x, y - 1));
-			y--;
-		}
-		x++;
-	}
-}
-
-void	put_from_ymax_xmax(t_data fdf)
-{
-	t_projection	current;
-	int				x;
-	int				y;
-
-	x = fdf.x_max - 1;
-	while (x >= 0)
-	{
-		y = fdf.y_max - 1;
-		while (y >= 0)
-		{
-			current = project_iso(fdf.coordinate[y][x], x, y, fdf.option);
-			if (x - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x - 1, y));
-			if (y - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x, y - 1));
-			y--;
-		}
-		x--;
-	}
-}

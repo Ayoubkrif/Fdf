@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 13:55:22 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 16:37:48 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	base_option_init(t_data *fdf)
 	fdf->mouse_pressed = 0;
 	fdf->render_from = 0;
 	fdf->time = get_time_in_ms();
+	fdf->option.colour = 0;
 }
 
 void	init_fdf(int fd, t_list *map, t_data *fdf)
@@ -57,7 +58,7 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
 	base_option_init(fdf);
 	fdf->mlx = mlx_init();
-	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, "Square");
+	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map);
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
@@ -86,6 +87,7 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == OPEN_FAILURE)
 		return (1);
+	fdf.map = argv[1];
 	init_fdf(fd, map, &fdf);
 	close(fd);
 	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
