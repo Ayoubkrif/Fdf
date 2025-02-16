@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/16 13:49:34 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 14:13:40 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,6 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 	}
 	my_mlx_pixel_put(data, x1, y1, color1);
 	my_mlx_pixel_put(data, x2, y2, color2);
-}
-
-void	line(t_data img, t_projection current, t_projection next, int xc, int yc, int xn, int yn)
-{
-	ft_draw_line_b(&img, current.x, current.y, next.x, next.y, img.coordinate[yc][xc].colour, img.coordinate[yn][xn].colour);
 }
 
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt)
