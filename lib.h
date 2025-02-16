@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 14:17:24 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 14:31:11 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2);
 void			ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color);
 t_projection	init_projection(int x, int y);
-void			line(t_data img, t_projection current, int xc, int yc, int xn, int yn);
+void			line(t_data img, t_projection current, t_projection c, t_projection n);
 t_projection	project_iso(t_coordinate point, int x, int y, t_option opt);
 
 void			start_fdf(t_data *fdf);
