@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/11 13:27:15 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 20:07:18 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	set_color(char *s, int *result)
 		*result = ft_atoi_base(&s[k], "0123456789ABCDEF");
 		colour = ft_atoi_base(&s[k], "0123456789abcdef");
 		if (colour > *result)
-				*result = colour;
+			*result = colour;
 		while (is_base(s[k], "0123456789ABCDEFabcdef") != -1)
 			k++;
 	}
@@ -105,6 +105,7 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 		k = 0;
 		while (j < fdf->x_max)
 		{
+			k += skip_whitespaces(&lst->s[k]);
 			fdf->coordinate[i][j].z = ft_atoi(&(lst->s)[k]);
 			k += skip_digits(&lst->s[k]);
 			set_min_and_max_z(fdf, i, j, fdf->coordinate[i][j].z);

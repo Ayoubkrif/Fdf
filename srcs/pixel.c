@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/16 17:11:57 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 21:42:56 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,41 +42,6 @@ int	interpolate_color(int color1, int color2, float t)
 	return (red + green + blue);
 }
 
-int	negative_interpolate(int color1, int color2, float t)
-{
-	int	red;
-	int	green;
-	int	blue;
-
-	blue = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
-	color1 /= 256;
-	color2 /= 256;
-	green = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
-	green *= 256;
-	color1 /= 256;
-	color2 /= 256;
-	red = 255 - ((color1 % 256) * (1 - t) + (color2 % 256) * t);
-	red *= 256 * 256;
-	return (red + green + blue);
-}
-
-/*int	ground_interpolate(t_data *fdf)*/
-/*{*/
-/*	static int	height;*/
-/**/
-/*	height = fdf->z_max - fdf->z_min	*/
-/*}*/
-
-int	get_color(int	color1, int	color2, float t, t_data *fdf)
-{
-	if (fdf->option.colour == 1)
-		return (256 * 256 * 256);
-	if (fdf->option.colour == 2)
-		return (negative_interpolate(color1, color2, t));
-	else
-		return (interpolate_color(color1, color2, t));
-}
-
 t_projection	init_projection(int x, int y)
 {
 	t_projection	point;
@@ -108,9 +73,9 @@ void ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, in
 		if (length != 0)
 			t = step / length;
 		if  (color1 == color2)
-			color = get_color(color1, color1, t, data);
+			color = color1;
 		else
-			color = get_color(color1, color2, t, data);
+			color = interpolate_color(color1, color2, t);
 		my_mlx_pixel_put(data, x1, y1, color);
 		if ((x1 == x2 && y1 == y2))
 			break ;

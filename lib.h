@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 17:11:05 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 22:01:55 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_data
 	char				*addr;
 
 	t_coordinate	**coordinate;
+	t_coordinate	**save;
 
 	float				y_max;
 	float				x_max;
@@ -86,6 +87,7 @@ typedef struct s_data
 	t_option			option;
 	int					mouse_pressed;
 	int					render_from;
+	int					busy;
 	time_t				time;
 
 	int					bits_per_pixel;
@@ -110,6 +112,7 @@ typedef struct s_data
 # define KEY_Q           113
 # define KEY_E           101
 # define KEY_C           99
+# define KEY_N           110
 # define KEY_UP          65362
 # define KEY_DOWN        65364
 # define KEY_LEFT        65361
@@ -151,6 +154,7 @@ typedef struct s_data
 # define DOWN_LEFT 2
 # define DOWN_RIGHT 3
 void			fill_coordinate(t_list *lst, t_data *fdf);
+void			restore_save(t_coordinate **from, t_coordinate **to, int xmax, int ymax);
 void			liberator_int_tab(t_coordinate **tab, int line);
 void			print_int_tab(t_coordinate **tab, int y, int x);
 int				exit_fdf(t_data *fdf);
@@ -169,6 +173,7 @@ t_angle			set_new_angle(t_vect angle);
 void			put_new_img(t_data *img);
 
 int				key_hook(int keycode, t_data *img);
+void			clear_x_events(t_data *fdf);
 
 int				mouse_press(int button, int x, int y, t_data *fdf);
 int				mouse_move(int x, int y, t_data *fdf);

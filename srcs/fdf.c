@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 16:37:48 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 21:52:13 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 //			d
 
 #include "../lib.h"
+#include <stdlib.h>
 
 static t_list	*init_map_lst(t_list *map, int fd)
 {
@@ -32,6 +33,28 @@ static t_list	*init_map_lst(t_list *map, int fd)
 	}
 	return (map);
 }
+
+// static void	init_save(t_data *fdf)
+// {
+// 	int				i;
+// 	int				ymax;
+// 	int				xmax;
+// 	t_coordinate	**save;
+//
+// 	i = 0;
+// 	ymax = fdf->y_max;
+// 	xmax = fdf->x_max;
+// 	save = ft_calloc(ymax, sizeof(t_coordinate *));
+// 	if (!save)
+// 		return ;
+// 	while (i < ymax)
+// 	{
+// 		save[i] = ft_calloc(xmax, sizeof(t_coordinate));
+// 		if (save[i] == NULL)
+// 			return (liberator_int_tab(save, i));
+// 		i++;
+// 	}
+// }
 
 static void	base_option_init(t_data *fdf)
 {
@@ -55,7 +78,9 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 		exit(0);
 	fill_coordinate(map, fdf);
 	ft_lstclear(&map, free);
-	print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
+	// init_save(fdf);
+	// restore_save(fdf->coordinate, fdf->save, fdf->x_max, fdf->y_max);
+	// print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
 	base_option_init(fdf);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map);
