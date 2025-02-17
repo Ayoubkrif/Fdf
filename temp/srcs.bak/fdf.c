@@ -6,14 +6,16 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:54:57 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 21:52:13 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // TO DO :
-// rotation unique selon x y z
-// translation
-// scale
+//			integrer les valeurs importantes a la structure :
+//			x max, y max.
+//			faire le projete en 2d
+//			gerer les couleurs
+//			d
 
 #include "../lib.h"
 #include <stdlib.h>

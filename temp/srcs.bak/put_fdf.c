@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:36:55 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:36:11 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/16 22:44:09 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	put_from_0_0(t_data *fdf)
 				line(fdf, current, iv(x, y), iv(x + 1, y + 1));
 			if (x + 1 < fdf->x_max && y - 1 >= 0)
 				line(fdf, current, iv(x, y), iv(x + 1, y - 1));
-			if (x + 1 < fdf->x_max && y - 2 >= 0)
-				line(fdf, current, iv(x, y), iv(x + 1, y - 2));
-			if (x - 1 >= 0 && y - 2 >= 0)
-				line(fdf, current, iv(x, y), iv(x - 1, y - 2));
-			if (x + 2 < fdf->x_max && y - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x + 2, y - 1));
-			if (x - 2 >= 0 && y - 1 >= 0)
-				line(fdf, current, iv(x, y), iv(x - 2, y - 1));
+			// if (x + 1 < fdf->x_max && y - 2 >= 0)
+			// 	line(fdf, current, iv(x, y), iv(x + 1, y - 2));
+			// if (x - 1 >= 0 && y - 2 >= 0)
+			// 	line(fdf, current, iv(x, y), iv(x - 1, y - 2));
+			// if (x + 2 < fdf->x_max && y - 1 >= 0)
+			// 	line(fdf, current, iv(x, y), iv(x + 2, y - 1));
+			// if (x - 2 >= 0 && y - 1 >= 0)
+			// 	line(fdf, current, iv(x, y), iv(x - 2, y - 1));
 			y++;
 		}
 		x++;
