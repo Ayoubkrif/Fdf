@@ -6,82 +6,44 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 20:07:18 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:27:10 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib.h"
+#include <time.h>
 
-static int	count_words(const char *s, char *c)
+int		count_words(const char *s, char *c);
+int		skip_digits(char *s);
+int		skip_whitespaces(char *s);
+int		set_color(char *s, int *result);
+void	set_min_and_max_z(t_data *fdf, int i, int j, int z);
+
+void	calloc_rows_set_max(t_list *lst, t_data *fdf)
 {
-	int	i;
-	int	words;
-	int	k;
-
-	i = 0;
-	words = 0;
-	k = 0;
-	while (s[i])
-	{
-		if (s[i] == c[0] || s[i] == c[1])
-			k = 0;
-		else if (k == 0)
-		{
-			words++;
-			k = 1;
-		}
-		i++;
-	}
-	return (words);
+	fdf->y_max = ft_lstsize(lst);
+	if (fdf->y_max == 0)
+		ft_exit(fdf, lst, EXIT_FAILURE);
+	fdf->x_max = count_words(lst->s, " \n");
+	if (fdf->x_max == 0 || fdf->x_max == -1)
+		ft_exit(fdf, lst, EXIT_FAILURE);
+	fdf->save = NULL;
+	fdf->coordinate = ft_calloc(fdf->y_max + 1, sizeof(t_coordinate *));
+	if (!fdf->coordinate)
+		exit(1);
+	fdf->coordinate[(int)fdf->y_max] = NULL;
 }
 
-static int	skip_digits(char *s)
+int	skip_digits_space_coma_hex(int i, int *j, char *s, t_data *fdf)
 {
 	int	k;
 
 	k = 0;
-	while (ft_isdigit(s[k]))
-		k++;
+	k += skip_digits(&s[k]);
+	k += set_color(&s[k], &fdf->coordinate[i][*j].colour);
+	k += skip_whitespaces(&s[k]);
+	*j = *j + 1;
 	return (k);
-}
-
-static int	skip_whitespaces(char *s)
-{
-	int	k;
-
-	k = 0;
-	while (ft_isspace(s[k]))
-		k++;
-	return (k);
-}
-
-static int	set_color(char *s, int *result)
-{
-	int	colour;
-	int	k;
-
-	k = 0;
-	if (s[k] == ',')
-	{
-		k += 3;
-		*result = ft_atoi_base(&s[k], "0123456789ABCDEF");
-		colour = ft_atoi_base(&s[k], "0123456789abcdef");
-		if (colour > *result)
-			*result = colour;
-		while (is_base(s[k], "0123456789ABCDEFabcdef") != -1)
-			k++;
-	}
-	else
-		*result = BASE_COLOR;
-	return (k);
-}
-
-static void	set_min_and_max_z(t_data *fdf, int i, int j, int z)
-{
-	if ((!i && !j) || z > fdf->z_max)
-		fdf->z_max = z;
-	if ((!i && !j) || z < fdf->z_min)
-		fdf->z_min = z;
 }
 
 void	fill_coordinate(t_list *lst, t_data *fdf)
@@ -89,44 +51,26 @@ void	fill_coordinate(t_list *lst, t_data *fdf)
 	int		i;
 	int		j;
 	int		k;
+	t_list	*current;
 
-	fdf->x_max = count_words(lst->s, " \n");
-	fdf->y_max = ft_lstsize(lst);
-	fdf->coordinate = ft_calloc(fdf->y_max, sizeof(t_coordinate *));
-	if (!fdf->coordinate)
-		exit(13);
+	current = lst;
 	i = 0;
-	while (lst)
+	calloc_rows_set_max(lst, fdf);
+	while (current)
 	{
 		fdf->coordinate[i] = malloc(fdf->x_max * sizeof(t_coordinate));
 		if (!fdf->coordinate[i])
-			exit(14);
+			ft_exit(fdf, lst, EXIT_FAILURE);
 		j = 0;
 		k = 0;
 		while (j < fdf->x_max)
 		{
-			k += skip_whitespaces(&lst->s[k]);
-			fdf->coordinate[i][j].z = ft_atoi(&(lst->s)[k]);
-			k += skip_digits(&lst->s[k]);
+			k += skip_whitespaces(&current->s[k]);
+			fdf->coordinate[i][j].z = ft_atoi(&(current->s)[k]);
 			set_min_and_max_z(fdf, i, j, fdf->coordinate[i][j].z);
-			k += set_color(&lst->s[k], &fdf->coordinate[i][j].colour);
-			k += skip_whitespaces(&lst->s[k]);
-			j++;
+			k += skip_digits_space_coma_hex(i, &j, &current->s[k], fdf);
 		}
 		i++;
-		lst = lst->next;
+		current = current->next;
 	}
-}
-
-void	liberator_int_tab(t_coordinate **tab, int line)
-{
-	int	i;
-
-	i = 0;
-	while (i < line)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:53:47 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:02:45 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_data
 	t_coordinate		**coordinate;
 	t_coordinate		**save;
 
-	float				y_max;
-	float				x_max;
+	int				y_max;
+	int				x_max;
 	float				z_max;
 	float				z_min;
 	t_vect				angle;

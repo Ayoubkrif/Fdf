@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:54:57 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:39:23 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,29 @@ static t_list	*init_map_lst(t_list *map, int fd)
 	return (map);
 }
 
-// static void	init_save(t_data *fdf)
-// {
-// 	int				i;
-// 	int				ymax;
-// 	int				xmax;
-// 	t_coordinate	**save;
-//
-// 	i = 0;
-// 	ymax = fdf->y_max;
-// 	xmax = fdf->x_max;
-// 	save = ft_calloc(ymax, sizeof(t_coordinate *));
-// 	if (!save)
-// 		return ;
-// 	while (i < ymax)
-// 	{
-// 		save[i] = ft_calloc(xmax, sizeof(t_coordinate));
-// 		if (save[i] == NULL)
-// 			return (liberator_int_tab(save, i));
-// 		i++;
-// 	}
-// }
+static void	init_save(t_data *fdf)
+{
+	int				i;
+	int				ymax;
+	int				xmax;
+	t_coordinate	**save;
+
+	i = 0;
+	ymax = fdf->y_max;
+	xmax = fdf->x_max;
+	save = ft_calloc(ymax + 1, sizeof(t_coordinate *));
+	if (!save)
+		return ;
+	save[ymax] = NULL;
+	while (i < ymax)
+	{
+		save[i] = ft_calloc(xmax, sizeof(t_coordinate));
+		if (save[i] == NULL)
+			return (liberator_int_tab(save));
+		i++;
+	}
+	fdf->save = save;
+}
 
 static void	base_option_init(t_data *fdf)
 {
@@ -72,13 +74,11 @@ static void	base_option_init(t_data *fdf)
 void	init_fdf(int fd, t_list *map, t_data *fdf)
 {
 	map = init_map_lst(map, fd);
-	if (!map)
-		exit(0);
 	fill_coordinate(map, fdf);
 	ft_lstclear(&map, free);
-	// init_save(fdf);
-	// restore_save(fdf->coordinate, fdf->save, fdf->x_max, fdf->y_max);
-	// print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
+	init_save(fdf);
+	restore_save(fdf->coordinate, fdf->save, fdf->x_max, fdf->y_max);
+	print_int_tab(fdf->coordinate, fdf->y_max, fdf->x_max);
 	base_option_init(fdf);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map);
@@ -86,16 +86,6 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
 	put_new_img(fdf);
-}
-
-int	exit_fdf(t_data *fdf)
-{
-	mlx_destroy_image(fdf->mlx, fdf->img);
-	mlx_destroy_window(fdf->mlx, fdf->win);
-	mlx_destroy_display(fdf->mlx);
-	free(fdf->mlx);
-	liberator_int_tab(fdf->coordinate, fdf->y_max);
-	exit(15);
 }
 
 int	main(int argc, char **argv)

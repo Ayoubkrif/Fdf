@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 19:03:53 by cbordeau         ###   LAUSANNE.ch       */
+/*   Updated: 2025/02/18 16:28:02 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static int	colors(int keycode, t_data *fdf)
 		change_color(fdf, 0x00000000, 0x00FFFFFF);
 	else if (keycode == KEY_1)
 		change_color(fdf, 0x00FF0000, 0x00FFFFFF);
-	// else if (keycode == KEY_N)
-	// 	restore_save(fdf->save, fdf->coordinate, fdf->x_max, fdf->y_max);
+	else if (keycode == KEY_N)
+		restore_save(fdf->save, fdf->coordinate, fdf->x_max, fdf->y_max);
 	return (keycode == KEY_1 || keycode == KEY_2 || keycode == KEY_N);
 }
 
@@ -75,19 +75,9 @@ static int	view_hook(int keycode, t_data *img)
 			img->render_from = 0;
 		else
 			img->render_from++;
-		printf("current render_from : %d\n",img->render_from);
 	}
 	return (keycode == KEY_0 || keycode == KEY_SPACE);
 }
-
-// int	colour_hook(int keycode, t_data *fdf)
-// {
-// 	if (keycode == KEY_N)
-// 	{
-// 	}
-//
-// 	return (keycode == KEY_C);
-// }
 
 int	key_hook(int keycode, t_data *img)
 {

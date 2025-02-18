@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:53:59 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:32:42 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@
 
 void			fill_coordinate(t_list *lst, t_data *fdf);
 void			restore_save(t_coordinate **from, t_coordinate **to, int xmax, int ymax);
-void			liberator_int_tab(t_coordinate **tab, int line);
+int				exit_fdf(t_data *fdf);
+void			liberator_int_tab(t_coordinate **tab);
 void			print_int_tab(t_coordinate **tab, int y, int x);
 int				exit_fdf(t_data *fdf);
+void			ft_exit(t_data *fdf, t_list *lst, int err_code);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_draw_line_b(t_data *data, int x1, int y1, int x2, int y2, int color1, int color2);

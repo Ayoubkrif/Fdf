@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:31:59 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 21:45:07 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/18 12:23:14 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	restore_save(t_coordinate **from, t_coordinate **to, int xmax, int ymax)
 			to[i][j].colour = from[i][j].colour;
 			j++;
 		}
+		i++;
 	}
 }
 
