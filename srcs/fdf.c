@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/19 10:28:56 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:00:29 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 // pixel c le bordel
 #include "../lib.h"
 
-static t_list	*init_map_lst(t_list *map, int fd)
+static t_list	*init_map_lst(t_list *lst, char *map)
 {
 	char	*s;
 	t_list	*node;
+	int		fd;
 
+	fd = open(map, O_RDONLY);
+	if (fd == OPEN_FAILURE)
+		return (NULL);
 	while (TRUE)
 	{
 		s = get_next_line(fd);
@@ -31,9 +35,10 @@ static t_list	*init_map_lst(t_list *map, int fd)
 			free(s);
 			break ;
 		}
-		ft_lstadd_back(&map, ft_lstnew(s));
+		ft_lstadd_back(&lst, node);
 	}
-	return (map);
+	close(fd);
+	return (lst);
 }
 
 static void	init_save(t_data *fdf)
@@ -74,12 +79,14 @@ static void	base_option_init(t_data *fdf)
 	fdf->option.colour = 0;
 }
 
-void	init_fdf(int fd, t_list *map, t_data *fdf)
+void	init_fdf(t_list *map, t_data *fdf)
 {
+	fdf->save = NULL;
+	fdf->coordinate = NULL;
 	fdf->mlx = mlx_init();
 	if (fdf->mlx == NULL)
 		ft_exit(fdf, map, FAILURE);
-	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map);
+	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map_name);
 	if (fdf->win == NULL)
 		ft_exit(fdf, map, FAILURE);
 	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
@@ -87,32 +94,25 @@ void	init_fdf(int fd, t_list *map, t_data *fdf)
 		ft_exit(fdf, map, FAILURE);
 	fdf->addr = mlx_get_data_addr(fdf->img,
 			&fdf->bits_per_pixel, &fdf->line_length, &fdf->endian);
-	fdf->save = NULL;
-	fdf->coordinate = NULL;
-	map = init_map_lst(map, fd);
+	map = init_map_lst(map, fdf->map_name);
 	fill_coordinate(map, fdf);
 	ft_lstclear(&map, free);
 	init_save(fdf);
 	restore_save(fdf->coordinate, fdf->save, fdf->x_max, fdf->y_max);
-	base_option_init(fdf);
-	put_new_img(fdf);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	fdf;
-	int		fd;
 	t_list	*map;
 
 	map = NULL;
-	if (argc < 2)
+	if (argc < 2 || argc > 3)
 		return (1);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == OPEN_FAILURE)
-		return (1);
-	fdf.map = argv[1];
-	init_fdf(fd, map, &fdf);
-	close(fd);
+	fdf.map_name = argv[1];
+	init_fdf(map, &fdf);
+	base_option_init(&fdf);
+	put_new_img(&fdf);
 	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
 	mlx_hook(fdf.win, 17, 1L << 0, exit_fdf, &fdf);
 	mlx_hook(fdf.win, 4, 1L << 2, mouse_press, &fdf);

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/18 13:02:45 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:50:52 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_option
 
 typedef struct s_data
 {
-	char				*map;
+	char				*map_name;
 	void				*mlx;
 	void				*win;
 	void				*img;
