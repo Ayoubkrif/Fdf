@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:36:55 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/17 22:36:11 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/19 10:26:28 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ void	start_fdf(t_data *fdf)
 
 	render = fdf->render_from;
 	fdf->option.offset = set_offset(*fdf);
-	printf("x : %f, y : %f, z : %f\n",
-		360 * fdf->angle.x / (PI * 2),
-		360 * fdf->angle.y / (PI * 2),
-		360 * fdf->angle.z / (PI * 2));
+	/*printf("x : %f, y : %f, z : %f\n",*/
+	/*	360 * fdf->angle.x / (PI * 2),*/
+	/*	360 * fdf->angle.y / (PI * 2),*/
+	/*	360 * fdf->angle.z / (PI * 2));*/
 	if (render == UP_LEFT)
 		put_from_0_0(fdf);
 	else if (render == UP_RIGHT)

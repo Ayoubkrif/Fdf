@@ -6,12 +6,11 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/18 16:27:10 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/19 10:12:46 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib.h"
-#include <time.h>
 
 int		count_words(const char *s, char *c);
 int		skip_digits(char *s);
@@ -27,10 +26,9 @@ void	calloc_rows_set_max(t_list *lst, t_data *fdf)
 	fdf->x_max = count_words(lst->s, " \n");
 	if (fdf->x_max == 0 || fdf->x_max == -1)
 		ft_exit(fdf, lst, EXIT_FAILURE);
-	fdf->save = NULL;
 	fdf->coordinate = ft_calloc(fdf->y_max + 1, sizeof(t_coordinate *));
 	if (!fdf->coordinate)
-		exit(1);
+		ft_exit(fdf, lst, EXIT_FAILURE);
 	fdf->coordinate[(int)fdf->y_max] = NULL;
 }
 

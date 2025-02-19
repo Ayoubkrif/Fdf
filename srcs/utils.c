@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:43:51 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:44 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/19 10:14:14 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	count_words(const char *s, char *c)
 	i = 0;
 	words = 0;
 	k = 0;
-	if (!s)
-		return (-1);
 	while (s[i])
 	{
 		if (s[i] == c[0] || s[i] == c[1])
