@@ -6,12 +6,15 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:51:36 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/19 09:31:10 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:23:23 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
+
+# define WINX 1920	
+# define WINY 1080
 
 # define OPEN_FAILURE -1
 # define FAILURE 1

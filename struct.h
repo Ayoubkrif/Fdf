@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/19 11:50:52 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:53:36 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct s_projection
 {
-	int		x;
-	int		y;
-	int		colour;
+	double		x;
+	double		y;
+	int			colour;
 }	t_projection;
 
 typedef struct s_coordinate
@@ -69,8 +69,8 @@ typedef struct s_data
 	t_coordinate		**coordinate;
 	t_coordinate		**save;
 
-	int				y_max;
-	int				x_max;
+	int					y_max;
+	int					x_max;
 	float				z_max;
 	float				z_min;
 	t_vect				angle;
@@ -78,12 +78,10 @@ typedef struct s_data
 	int					mouse_pressed;
 	int					render_from;
 	int					busy;
-	time_t				time;
 
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
 }	t_data;
-
 
 #endif

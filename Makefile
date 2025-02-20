@@ -6,7 +6,7 @@
 #    By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/16 20:19:29 by aykrifa           #+#    #+#              #
-#    Updated: 2025/02/19 09:21:24 by aykrifa          ###   ########.fr        #
+#    Updated: 2025/02/20 15:01:37 by aykrifa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ MLX = minilibx-linux
 SOURCES = fdf.c parsing_fdf.c pixel.c \
 	  keyhook.c view.c \
 		mouse_hook.c put_fdf.c \
-		put_new_image.c colors.c save.c exit.c utils.c
+		put_new_image.c colors.c \
+		save.c exit.c utils.c draw.c \
+		utils2.c 
 #to_delete.c 
 
 ### OBJECTS ###
