@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/19 10:12:46 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:22:56 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	skip_digits_space_coma_hex(int i, int *j, char *s, t_data *fdf)
 	int	k;
 
 	k = 0;
+	if (s[k] == '-')
+		k++;
 	k += skip_digits(&s[k]);
 	k += set_color(&s[k], &fdf->coordinate[i][*j].colour);
 	k += skip_whitespaces(&s[k]);

@@ -6,7 +6,7 @@
 /*   By: cbordeau <cbordeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:56:42 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/19 10:30:00 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:07:47 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,45 @@ void	change_color(t_data *fdf, int base, int final)
 		p.x++;
 	}
 }
-//
+
+void	set_earth_colors(int z, int *color)
+{
+	if (z <= -10)
+		*color = 0x00008B;
+	else if (z > -10 && z <= 0)
+		*color = 0x1E90FF;
+	else if (z > 0 && z <= 5)
+		*color = 0xF4A460;
+	else if (z > 5 && z <= 20)
+		*color = 0x00FF00;
+	else if (z > 20 && z <= 50)
+		*color = 0x008000;
+	else if (z > 50 && z <= 100)
+		*color = 0x8B4513;
+	else if (z > 100 && z <= 200)
+		*color = 0xA9A9A9;
+	else
+		*color = 0xFFFFFF;
+}
+
+void	earth_color(t_data *fdf)
+{
+	t_offset	p;
+
+	p.y = 0;
+	while (p.y < fdf->y_max)
+	{
+		p.x = 0;
+		while (p.x < fdf->x_max)
+		{
+			set_earth_colors(fdf->coordinate[p.y][p.x].z,
+				&fdf->coordinate[p.y][p.x].colour);
+			p.x++;
+		}
+		p.y++;
+	}
+}
+
 // void	move_z(t_data *fdf, int mode)
 // {
 // 	int	i;
@@ -109,3 +147,23 @@ void	change_color(t_data *fdf, int base, int final)
 // 	if (mode == 0 && fdf->coordinate.minz + 1 != fdf->coordinate.maxz)
 // 		fdf->coordinate.maxz -= 1;
 // }
+
+int	interpolate_color(int color1, int color2, float len, float pixel)
+{
+	int		red;
+	int		green;
+	int		blue;
+	float	t;
+
+	t = (len - pixel) / len;
+	blue = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	color1 /= 256;
+	color2 /= 256;
+	green = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	green *= 256;
+	color1 /= 256;
+	color2 /= 256;
+	red = (color1 % 256) * (1 - t) + (color2 % 256) * t;
+	red *= 256 * 256;
+	return (red + green + blue);
+}

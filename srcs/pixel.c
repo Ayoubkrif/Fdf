@@ -6,7 +6,7 @@
 /*   By: cbordeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:45:58 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/20 14:59:17 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:43:13 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,20 +116,3 @@ t_offset	set_offset(t_data img)
 // 	my_mlx_pixel_put(data, x2, y2, color2);
 // }
 //
-// int	interpolate_color(int color1, int color2, float t)
-// {
-// 	int	red;
-// 	int	green;
-// 	int	blue;
-//
-// 	blue = (color1 % 256) * (1 - t) + (color2 % 256) * t;
-// 	color1 /= 256;
-// 	color2 /= 256;
-// 	green = (color1 % 256) * (1 - t) + (color2 % 256) * t;
-// 	green *= 256;
-// 	color1 /= 256;
-// 	color2 /= 256;
-// 	red = (color1 % 256) * (1 - t) + (color2 % 256) * t;
-// 	red *= 256 * 256;
-// 	return (red + green + blue);
-// }

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:38:03 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/19 09:45:56 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:42:24 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	ft_exit(t_data *fdf, t_list *lst, int err_code)
 		ft_lstclear(&lst, free);
 	liberator_int_tab(fdf->coordinate);
 	liberator_int_tab(fdf->save);
-	if (fdf->img)
-		mlx_destroy_image(fdf->mlx, fdf->img);
-	if (fdf->win)
-		mlx_destroy_window(fdf->mlx, fdf->win);
 	if (fdf->mlx)
 	{
-		mlx_destroy_display(fdf->mlx);
 		free(fdf->mlx);
+		if (fdf->img)
+			mlx_destroy_image(fdf->mlx, fdf->img);
+		if (fdf->win)
+			mlx_destroy_window(fdf->mlx, fdf->win);
+		mlx_destroy_display(fdf->mlx);
 	}
 	exit(err_code);
 }

@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/20 14:58:10 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:17:59 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void			put_new_img(t_data *img);
 int				key_hook(int keycode, t_data *img);
 void			clear_x_events(t_data *fdf);
 void			change_color(t_data *fdf, int base, int final);
+int				interpolate_color(int color1, int color2, float len, float pixel);
+void			earth_color(t_data *fdf);
 
 int				mouse_press(int button, int x, int y, t_data *fdf);
 int				mouse_move(int x, int y, t_data *fdf);

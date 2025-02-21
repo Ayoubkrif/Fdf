@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:51:36 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/20 14:23:23 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:08:16 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,22 @@
 # define KEY_MINUS 45
 # define MOUSE_WHEEL_UP 4
 # define MOUSE_WHEEL_DOWN 5
+
+# define BLACK       0x000000
+# define WHITE       0xFFFFFF
+# define RED         0xFF0000
+# define GREEN       0x00FF00
+# define BLUE        0x0000FF
+# define YELLOW      0xFFFF00
+# define CYAN        0x00FFFF
+# define MAGENTA     0xFF00FF
+# define ORANGE      0xFFA500
+# define PURPLE      0x800080
+# define PINK        0xFFC0CB
+# define BROWN       0x8B4513
+# define GRAY        0x808080
+# define LIGHT_GRAY  0xD3D3D3
+# define DARK_GRAY   0xA9A9A9
 
 # define EVENT_KEY_PRESS 2
 # define EVENT_KEY_RELEASE 3

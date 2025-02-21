@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:44:58 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/20 14:58:49 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/21 12:54:39 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	draw_line(t_data *fdf, t_projection start, t_projection end)
 	pixel.y = start.y;
 	while (pixels > 0)
 	{
-		pixel.colour = gradient(start.colour, end.colour, len, len - pixels);
+		pixel.colour = interpolate_color(start.colour, end.colour, (float)len, (float)pixels);
 		my_mlx_pixel_put(fdf, pixel.x, pixel.y, pixel.colour);
 		pixel.x += delta.x;
 		pixel.y += delta.y;
