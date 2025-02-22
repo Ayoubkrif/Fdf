@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:44:48 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/21 13:17:59 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:08:26 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,28 @@ void			put_new_img(t_data *img);
 int				key_hook(int keycode, t_data *img);
 void			clear_x_events(t_data *fdf);
 void			change_color(t_data *fdf, int base, int final);
-int				interpolate_color(int color1, int color2, float len, float pixel);
+int				interpolate_color(int color1, int color2,
+					float len, float pixel);
 void			earth_color(t_data *fdf);
 
 int				mouse_press(int button, int x, int y, t_data *fdf);
 int				mouse_move(int x, int y, t_data *fdf);
 int				mouse_release(int button, int x, int y, t_data *fdf);
 time_t			get_time_in_ms(void);
-
+////put_fdf.c///
 void			put_from_0_0(t_data *fdf);
 void			put_from_0_xmax(t_data *fdf);
 void			put_from_ymax_0(t_data *fdf);
 void			put_from_ymax_xmax(t_data *fdf);
-
-int				ft_round(double num);
-float			distance(int a, int b);
+////utils2.c////
+float			distance(float a, float b);
+t_projection	iv(int x, int y);
+////wired_frame.c
+void			set_wired_frame1(t_data *fdf,
+					t_projection current, int x, int y);
+void			set_wired_frame2(t_data *fdf,
+					t_projection current, int x, int y);
+void			set_wired_frame3(t_data *fdf,
+					t_projection current, int x, int y);
 
 #endif

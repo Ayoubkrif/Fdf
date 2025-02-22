@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/20 14:53:36 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:05:00 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ typedef struct s_projection
 	double		y;
 	int			colour;
 }	t_projection;
+
+typedef struct s_index
+{
+	int		x;
+	int		y;
+}	t_index;
 
 typedef struct s_coordinate
 {

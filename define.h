@@ -6,13 +6,13 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:51:36 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/21 13:08:16 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 09:00:15 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
-
+/////////DISPLAY SIZE///////
 # define WINX 1920	
 # define WINY 1080
 
@@ -20,13 +20,11 @@
 # define FAILURE 1
 # define SUCCESS 0
 
-# define BASE_COLOR 0xffffff
 # define ANGLE 0.523598776
 # define STEP 1
 # define OFFSET 500
 
-# define PI 3.14159265358979323846
-
+/////////KEY HOOK///////////
 # define KEY_ESC         65307
 # define KEY_W           119
 # define KEY_A           97
@@ -60,7 +58,8 @@
 # define KEY_MINUS 45
 # define MOUSE_WHEEL_UP 4
 # define MOUSE_WHEEL_DOWN 5
-
+/////////COLORS//////////////
+# define BASE_COLOR 0xffffff
 # define BLACK       0x000000
 # define WHITE       0xFFFFFF
 # define RED         0xFF0000
@@ -76,13 +75,22 @@
 # define GRAY        0x808080
 # define LIGHT_GRAY  0xD3D3D3
 # define DARK_GRAY   0xA9A9A9
-
+# define DEEP_OCEAN  0x00008B  // Bleu foncé (Océan profond)
+# define SHALLOW_WATER 0x1E90FF // Bleu clair (Eau peu profonde)
+# define SAND        0xF4A460  // Beige/Sable (Plage)
+# define GRASSLAND   0x00FF00  // Vert clair (Plaine/Végétation)
+# define HILLS       0x008000  // Vert foncé (Collines)
+# define MOUNTAIN    0x8B4513  // Marron (Montagnes moyennes)
+# define HIGH_MOUNTAIN 0xA9A9A9 // Gris clair (Hautes montagnes)
+# define SNOW        0xFFFFFF  // Blanc (Neige sur très haute altitude)
+/////////EVENT MLX HOOK//////
 # define EVENT_KEY_PRESS 2
 # define EVENT_KEY_RELEASE 3
 # define EVENT_MOUSE_PRESS 4
 # define EVENT_MOUSE_RELEASE 5
 # define EVENT_DESTROY 17
 
+# define PI 3.14159265358979323846
 # define PI_12 0.261799388
 # define PI_24 0.130899694
 

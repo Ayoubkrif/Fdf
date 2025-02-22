@@ -6,7 +6,7 @@
 /*   By: cbordeau <cbordeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:56:42 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/21 15:07:47 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 08:57:24 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ void	change_color(t_data *fdf, int base, int final)
 void	set_earth_colors(int z, int *color)
 {
 	if (z <= -10)
-		*color = 0x00008B;
+		*color = DEEP_OCEAN;
 	else if (z > -10 && z <= 0)
-		*color = 0x1E90FF;
+		*color = SHALLOW_WATER;
 	else if (z > 0 && z <= 5)
-		*color = 0xF4A460;
+		*color = SAND;
 	else if (z > 5 && z <= 20)
-		*color = 0x00FF00;
+		*color = GRASSLAND;
 	else if (z > 20 && z <= 50)
-		*color = 0x008000;
+		*color = HILLS;
 	else if (z > 50 && z <= 100)
-		*color = 0x8B4513;
+		*color = MOUNTAIN;
 	else if (z > 100 && z <= 200)
-		*color = 0xA9A9A9;
+		*color = HIGH_MOUNTAIN;
 	else
-		*color = 0xFFFFFF;
+		*color = SNOW;
 }
 
 void	earth_color(t_data *fdf)
