@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:12:50 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/16 21:52:59 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:21:01 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	mouse_move(int x, int y, t_data *fdf)
 {
 	if (fdf->mouse_pressed)
 	{
-		fdf->option.translate.x = x - 960;
-		fdf->option.translate.y = y - 540;
+		fdf->option.translate.x = x - (WINX / 2);
+		fdf->option.translate.y = y - (WINY / 2);
 		put_new_img(fdf);
 	}
 	return (0);

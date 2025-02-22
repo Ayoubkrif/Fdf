@@ -6,18 +6,11 @@
 /*   By: cbordeau <cbordeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:56:42 by cbordeau          #+#    #+#             */
-/*   Updated: 2025/02/22 08:57:24 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:24:52 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib.h"
-
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_rgb;
 
 static int	find_color(t_data fdf, int base, int final, t_offset p)
 {
@@ -43,27 +36,6 @@ static int	find_color(t_data fdf, int base, int final, t_offset p)
 	color.b = colora.b + (colorb.b - colora.b) * ratio;
 	return ((color.r << 16) | (color.g << 8) | color.b);
 }
-
-/*void	change_base_color(t_data *fdf, int base, int up)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < fdf->coordinate.maxy)
-	{
-		j = 0;
-		while (j < fdf->coordinate.maxx)
-		{
-			if (fdf->coordinate.map[i][j].color != 0xFFFFFF)
-				fdf->coordinate.map[i][j].color = base;
-			else
-				fdf->coordinate.map[i][j].color = up; 
-			j++;
-		}
-		i++;
-	}
-}*/
 
 void	change_color(t_data *fdf, int base, int final)
 {
@@ -120,33 +92,6 @@ void	earth_color(t_data *fdf)
 		p.y++;
 	}
 }
-
-// void	move_z(t_data *fdf, int mode)
-// {
-// 	int	i;
-// 	int	j;
-//
-// 	i = 0;
-// 	while (i < fdf->coordinate.maxy)
-// 	{
-// 		j = 0;
-// 		while (j < fdf->coordinate.maxx)
-// 		{
-// 			if (fdf->coordinate.map[i][j].z != fdf->coordinate.minz
-// 				&& mode == 1)
-// 				fdf->coordinate.map[i][j].z += 1;
-// 			if (fdf->coordinate.map[i][j].z > fdf->coordinate.minz + 1
-// 				&& mode == 0)
-// 				fdf->coordinate.map[i][j].z -= 1;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	if (mode == 1 && fdf->coordinate.minz + 1 != fdf->coordinate.maxz)
-// 		fdf->coordinate.maxz += 1;
-// 	if (mode == 0 && fdf->coordinate.minz + 1 != fdf->coordinate.maxz)
-// 		fdf->coordinate.maxz -= 1;
-// }
 
 int	interpolate_color(int color1, int color2, float len, float pixel)
 {

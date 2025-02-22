@@ -6,12 +6,19 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/22 10:05:00 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:24:39 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
 
 typedef struct s_projection
 {

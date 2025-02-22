@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/21 09:28:50 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:20:22 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	init_fdf(t_list *map, t_data *fdf)
 	fdf->mlx = mlx_init();
 	if (fdf->mlx == NULL)
 		ft_exit(fdf, map, FAILURE);
-	fdf->win = mlx_new_window(fdf->mlx, 1920, 1080, fdf->map_name);
+	fdf->win = mlx_new_window(fdf->mlx, WINX, WINY, fdf->map_name);
 	if (fdf->win == NULL)
 		ft_exit(fdf, map, FAILURE);
-	fdf->img = mlx_new_image(fdf->mlx, 1920, 1080);
+	fdf->img = mlx_new_image(fdf->mlx, WINX, WINY);
 	if (fdf->img == NULL)
 		ft_exit(fdf, map, FAILURE);
 	fdf->addr = mlx_get_data_addr(fdf->img,
