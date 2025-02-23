@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:00:34 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/21 13:18:26 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:29:54 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	colors(int keycode, t_data *fdf)
 		change_color(fdf, 0x00000000, 0x00FFFFFF);
 	else if (keycode == KEY_1)
 		change_color(fdf, 0x00FF0000, 0x00FFFFFF);
-	else if (keycode == KEY_6)
+	else if (keycode == KEY_9)
 		earth_color(fdf);
 	else if (keycode == KEY_N)
 		restore_save(fdf->save, fdf->coordinate, fdf->x_max, fdf->y_max);
@@ -78,7 +78,14 @@ static int	view_hook(int keycode, t_data *img)
 		else
 			img->render_from++;
 	}
-	return (keycode == KEY_0 || keycode == KEY_SPACE);
+	if (keycode == KEY_8)
+	{
+		if (img->render_quality == 2)
+			img->render_quality = 0;
+		else
+			img->render_quality++;
+	}
+	return (keycode == KEY_0 || keycode == KEY_SPACE || keycode == KEY_8);
 }
 
 int	key_hook(int keycode, t_data *img)

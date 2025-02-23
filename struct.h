@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:53:00 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/22 10:24:39 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:31:17 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_data
 	t_option			option;
 	int					mouse_pressed;
 	int					render_from;
-	int					busy;
+	int					render_quality;
 
 	int					bits_per_pixel;
 	int					line_length;

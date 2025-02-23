@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:36:55 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/22 10:07:08 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:37:00 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	put_from_0_0(t_data *fdf)
 		while (y < fdf->y_max)
 		{
 			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
-			if (1)
+			if (fdf->render_quality == 0)
 				set_wired_frame1(fdf, current, x, y);
-			if (1)
+			else if (fdf->render_quality == 1)
 				set_wired_frame2(fdf, current, x, y);
-			if (1)
+			else
 				set_wired_frame3(fdf, current, x, y);
 			y++;
 		}
@@ -66,11 +66,11 @@ void	put_from_0_xmax(t_data *fdf)
 		while (y < fdf->y_max)
 		{
 			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
-			if (1)
+			if (fdf->render_quality == 0)
 				set_wired_frame1(fdf, current, x, y);
-			if (1)
+			else if (fdf->render_quality == 1)
 				set_wired_frame2(fdf, current, x, y);
-			if (1)
+			else
 				set_wired_frame3(fdf, current, x, y);
 			y++;
 		}
@@ -91,11 +91,11 @@ void	put_from_ymax_0(t_data *fdf)
 		while (y >= 0)
 		{
 			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
-			if (1)
+			if (fdf->render_quality == 0)
 				set_wired_frame1(fdf, current, x, y);
-			if (1)
+			else if (fdf->render_quality == 1)
 				set_wired_frame2(fdf, current, x, y);
-			if (1)
+			else
 				set_wired_frame3(fdf, current, x, y);
 			y--;
 		}
@@ -116,11 +116,11 @@ void	put_from_ymax_xmax(t_data *fdf)
 		while (y >= 0)
 		{
 			current = project_iso(fdf->coordinate[y][x], x, y, fdf->option);
-			if (1)
+			if (fdf->render_quality == 0)
 				set_wired_frame1(fdf, current, x, y);
-			if (1)
+			else if (fdf->render_quality == 1)
 				set_wired_frame2(fdf, current, x, y);
-			if (1)
+			else
 				set_wired_frame3(fdf, current, x, y);
 			y--;
 		}

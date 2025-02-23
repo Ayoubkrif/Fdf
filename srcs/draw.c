@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:44:58 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/22 10:19:51 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:22:48 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_in_window(t_projection pixel)
 	return (1);
 }
 
-int	draw_line(t_data *fdf, t_projection start, t_projection end)
+void	draw_line(t_data *fdf, t_projection start, t_projection end)
 {
 	t_projection	delta;
 	t_projection	pixel;
@@ -41,7 +41,7 @@ int	draw_line(t_data *fdf, t_projection start, t_projection end)
 	int				len;
 
 	if (is_in_window(start) == 0 && is_in_window(end) == 0)
-		return (0);
+		return ;
 	delta.x = end.x - start.x;
 	delta.y = end.y - start.y;
 	pixels = sqrt((delta.x * delta.x) + \
@@ -59,7 +59,6 @@ int	draw_line(t_data *fdf, t_projection start, t_projection end)
 		pixel.y += delta.y;
 		pixels = pixels - 1;
 	}
-	return (1);
 }
 
 void	line(t_data *fdf, t_projection current, t_projection c, t_projection n)

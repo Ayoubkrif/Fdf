@@ -6,7 +6,7 @@
 /*   By: aykrifa <aykrifa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:59:09 by aykrifa           #+#    #+#             */
-/*   Updated: 2025/02/22 10:20:22 by aykrifa          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:31:37 by aykrifa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	base_option_init(t_data *fdf)
 	fdf->option.translate.y = 0;
 	fdf->mouse_pressed = 0;
 	fdf->render_from = 0;
+	fdf->render_quality = 0;
 	fdf->option.colour = 0;
 }
 
@@ -113,10 +114,10 @@ int	main(int argc, char **argv)
 	init_fdf(map, &fdf);
 	base_option_init(&fdf);
 	put_new_img(&fdf);
-	mlx_hook(fdf.win, 2, 1L << 0, key_hook, &fdf);
-	mlx_hook(fdf.win, 17, 1L << 0, exit_fdf, &fdf);
-	mlx_hook(fdf.win, 4, 1L << 2, mouse_press, &fdf);
-	mlx_hook(fdf.win, 5, 1L << 3, mouse_release, &fdf);
+	mlx_hook(fdf.win, EVENT_KEY_PRESS, 1L << 0, key_hook, &fdf);
+	mlx_hook(fdf.win, EVENT_DESTROY, 1L << 0, exit_fdf, &fdf);
+	mlx_hook(fdf.win, EVENT_MOUSE_PRESS, 1L << 2, mouse_press, &fdf);
+	mlx_hook(fdf.win, EVENT_MOUSE_RELEASE, 1L << 3, mouse_release, &fdf);
 	mlx_hook(fdf.win, 6, 1L << 6, mouse_move, &fdf);
 	mlx_mouse_hook(fdf.win, mouse_press, &fdf);
 	mlx_loop(fdf.mlx);
